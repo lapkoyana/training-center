@@ -1,53 +1,54 @@
 USE task1
 
-CREATE TABLE Lessons (
-	Lesson_ID TINYINT PRIMARY KEY IDENTITY,
-	Topic NVARCHAR(50) UNIQUE NOT NULL CHECK (Topic!=''),
-	Lesson_date DATE NOT NULL,
-	Lecture_file VARBINARY NOT NULL,
-	Sign_of_completeness BIT DEFAULT 0 NOT NULL
+CREATE TABLE lessons (
+	id TINYINT PRIMARY KEY IDENTITY,
+	topic NVARCHAR(50) UNIQUE NOT NULL CHECK (topic!=''),
+	date_of_class DATE NOT NULL,
+	lecture_file VARBINARY NOT NULL,
+	sign_of_completeness BIT DEFAULT 0 NOT NULL,
 );
 
-CREATE TABLE Questions (
-	Question_ID TINYINT PRIMARY KEY IDENTITY,
-	Question NVARCHAR NOT NULL
+CREATE TABLE questions (
+	id TINYINT IDENTITY,
+	content NVARCHAR NOT NULL,
+	lesson_id TINYINT,
+	FOREIGN KEY (lesson_id) REFERENCES lessons(id),
+	PRIMARY KEY (id, lesson_id)
 );
 
-CREATE TABLE Lessons_Questions (
-	LessonID TINYINT,
-	QuestionID TINYINT,
-	FOREIGN KEY (LessonID)  REFERENCES Lessons(Lesson_ID),
-	FOREIGN KEY (QuestionID)  REFERENCES Questions(Question_ID),
-	PRIMARY KEY(LessonID, QuestionID)
+CREATE TABLE student (
+	id_number TINYINT PRIMARY KEY IDENTITY,
+	first_name NVARCHAR(50) NOT NULL,
+	last_name NVARCHAR(50) NOT NULL,
+	pin NVARCHAR(20) NOT NULL
 );
 
-CREATE TABLE Student (
-	Student_ID_number TINYINT PRIMARY KEY IDENTITY,
-	Student_Surname NVARCHAR(50) NOT NULL,
-	Student_Name NVARCHAR(50) NOT NULL,
-	Pin NVARCHAR(20) NOT NULL
+CREATE TABLE lessons_student (
+	student_id TINYINT,
+	lesson_id TINYINT,
+	FOREIGN KEY (student_id) REFERENCES student(id_number),
+	FOREIGN KEY (lesson_id) REFERENCES lessons(id),
+	PRIMARY KEY (student_id, lesson_id)
 );
 
-CREATE TABLE Lessons_Student (
-	StudentID TINYINT,
-	LessonID TINYINT,
-	FOREIGN KEY (StudentID) REFERENCES Student(Student_ID_number),
-	FOREIGN KEY (LessonID) REFERENCES Lessons(Lesson_ID),
-	PRIMARY KEY (StudentID, LessonID)
+CREATE TABLE answer (
+	id TINYINT IDENTITY,
+	date_of_reply DATE NOT NULL,
+	content NVARCHAR  NOT NULL,
+	question_id TINYINT,
+	lesson_id TINYINT,
+	student_id TINYINT,
+	FOREIGN KEY (student_id) REFERENCES student(id_number),
+	FOREIGN KEY (question_id, lesson_id) REFERENCES questions(id,lesson_id),
+	PRIMARY KEY (id, question_id, lesson_id)
 );
 
-CREATE TABLE Answer (
-	Answer_ID TINYINT PRIMARY KEY IDENTITY,
-	Answer_Date DATE NOT NULL,
-	Answer_Text NVARCHAR  NOT NULL,
-	StudentID TINYINT,
-	FOREIGN KEY (StudentID) REFERENCES Student(Student_ID_number)
-);
-
-CREATE TABLE Answer_Student (
-	StudentID TINYINT,
-	AnswerID TINYINT,
-	FOREIGN KEY (StudentID) REFERENCES Student(Student_ID_number),
-	FOREIGN KEY (AnswerID) REFERENCES Answer(Answer_ID),
-	PRIMARY KEY (StudentID, AnswerID)
+CREATE TABLE answer_student (
+	student_id TINYINT,
+	answer_id TINYINT,
+	question_id TINYINT,
+	lesson_id TINYINT,
+	FOREIGN KEY (student_id) REFERENCES student(id_number),
+	FOREIGN KEY (answer_id, question_id, lesson_id) REFERENCES answer(id,question_id,lesson_id),
+	PRIMARY KEY (student_id, answer_id)
 );
