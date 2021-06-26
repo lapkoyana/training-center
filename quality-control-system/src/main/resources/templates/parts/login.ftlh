@@ -3,6 +3,7 @@
     <div><label> Имя : <input type="text" name="username"/> </label></div>
     <div><label> Пароль: <input type="password" name="password"/> </label></div>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
+    <label><input type="checkbox" name="remember-me"/>Запомнить меня</label>
     <div><input type="submit" value="ОК"/></div>
 </form>
 </#macro>

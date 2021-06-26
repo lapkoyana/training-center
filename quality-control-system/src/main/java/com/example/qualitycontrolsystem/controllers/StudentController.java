@@ -1,11 +1,11 @@
 package com.example.qualitycontrolsystem.controllers;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,11 +44,11 @@ public class StudentController {
     
     @GetMapping("/{userId}/interview/{lessonId}")
     public String interviewPage(
-    		@PathVariable(value = "userId") Long userId,
     		@PathVariable(value = "lessonId") Long lessonId,
+    		@PathVariable(value = "userId") Long userId,
     		Model model) {
     	Lesson lesson = lessonRepos.findById(lessonId).orElseThrow();
-    	Set<Question> questions = lesson.getQuestions();
+    	List<Question> questions = lesson.getQuestions();
     	model.addAttribute("lesson",lesson);
     	model.addAttribute("questions", questions);
     	return "interview";
@@ -58,12 +58,13 @@ public class StudentController {
     public String sendInterview(
     		@PathVariable(value = "userId") Long userId,
     		@PathVariable(value = "lessonId") Long lessonId,
-    		@RequestParam String answerContent) {
+    		@RequestParam String answerContent
+    		) {
     	Lesson lesson = lessonRepos.findById(lessonId).orElseThrow();
     	User user = userRepository.findById(userId).orElseThrow();
     	
     	String[] contentOfAnswers = answerContent.split(",");
-    	Set<Question> questions = lesson.getQuestions();
+    	List<Question> questions = lesson.getQuestions();
     	int i = 0;
     	for(Question q : questions) {
     		Answer answer = new Answer(LocalDate.now().toString(), contentOfAnswers[i], user, q, lesson);

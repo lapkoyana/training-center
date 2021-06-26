@@ -17,6 +17,11 @@ public class MainController {
 	@Autowired
 	private UserRepository userRepos;
 	
+	@GetMapping("/login")
+	private String login() {
+		return "login";
+	}
+	
 	@GetMapping("/registration")
 	public String registration() {
 		return "registration";

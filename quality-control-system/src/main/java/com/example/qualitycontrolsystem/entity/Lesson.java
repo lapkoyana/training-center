@@ -1,5 +1,6 @@
 package com.example.qualitycontrolsystem.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -26,7 +27,7 @@ public class Lesson {
 	private User user;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Question> questions;
+	private List<Question> questions;
 	
 	public Lesson() {
 	}
@@ -74,11 +75,11 @@ public class Lesson {
 		this.user = user;
 	}
 
-	public Set<Question> getQuestions() {
+	public List<Question> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(Set<Question> questions) {
+	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
 	

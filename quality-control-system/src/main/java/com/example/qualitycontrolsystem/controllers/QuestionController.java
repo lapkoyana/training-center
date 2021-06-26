@@ -1,5 +1,6 @@
 package com.example.qualitycontrolsystem.controllers;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class QuestionController {
     		@PathVariable(value = "lesson") Lesson lesson,
     		@RequestParam(required = false) Question question,
     		Model model) {
-		Set<Question> questions = lesson.getQuestions();
+		List<Question> questions = lesson.getQuestions();
         model.addAttribute("questions", questions);
         model.addAttribute("lesson", lesson);
         return "questionList";
