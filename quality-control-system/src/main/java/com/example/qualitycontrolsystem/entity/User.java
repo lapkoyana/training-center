@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,6 +32,9 @@ public class User implements UserDetails{
 			   joinColumns = @JoinColumn(name = "user_id"),
 			   inverseJoinColumns = @JoinColumn(name = "answer_id"))
 	private Set<Answer> answer = new HashSet<Answer>();
+	
+	@OneToMany(targetEntity=UserLesson.class, mappedBy="user")
+	private List<UserLesson> userLesson;
 	
 	public User(String username) {
 		this.username = username;

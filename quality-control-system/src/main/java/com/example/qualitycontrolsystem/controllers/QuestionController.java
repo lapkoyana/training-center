@@ -1,7 +1,6 @@
 package com.example.qualitycontrolsystem.controllers;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +29,6 @@ public class QuestionController {
 	@GetMapping("{lesson}/questions")
     public String questionListPage(
     		@PathVariable(value = "lesson") Lesson lesson,
-    		@RequestParam(required = false) Question question,
     		Model model) {
 		List<Question> questions = lesson.getQuestions();
         model.addAttribute("questions", questions);

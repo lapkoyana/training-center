@@ -1,8 +1,10 @@
 package com.example.qualitycontrolsystem.controllers;
 
 import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,8 +20,10 @@ import com.example.qualitycontrolsystem.entity.Answer;
 import com.example.qualitycontrolsystem.entity.Lesson;
 import com.example.qualitycontrolsystem.entity.Question;
 import com.example.qualitycontrolsystem.entity.User;
+import com.example.qualitycontrolsystem.entity.UserLesson;
 import com.example.qualitycontrolsystem.repos.AnswerRepository;
 import com.example.qualitycontrolsystem.repos.LessonRepository;
+import com.example.qualitycontrolsystem.repos.UserLessonRepository;
 import com.example.qualitycontrolsystem.repos.UserRepository;
 
 @Controller
@@ -32,13 +36,29 @@ public class StudentController {
 	private UserRepository userRepository;
 	@Autowired
 	private AnswerRepository answerRepository;
+	@Autowired
+	private UserLessonRepository userLessonRepository;
 	
     @GetMapping("/{user}")
     public String completedLectionsList( 
     		Model model,
     		@PathVariable User user) {
-        Iterable<Lesson> lessons = lessonRepos.findAll();
-        model.addAttribute("lessons", lessons);
+        Iterator<Lesson> i1 = lessonRepos.findAll().iterator();
+        
+        List<UserLesson> userLessons = userLessonRepository.findByUser(user);
+        Iterator<UserLesson> i2 = userLessons.iterator();
+        
+        Map<Lesson, UserLesson> map = new LinkedHashMap<>();
+        
+        while(i1.hasNext()) {
+        	if (i2.hasNext()) {
+        		map.put(i1.next(), i2.next());
+        	}
+        	else {
+        		map.put(i1.next(), null);
+        	}
+        }
+        model.addAttribute("lessons", map);
         return "studentLectionList";
     }
     
@@ -48,7 +68,9 @@ public class StudentController {
     		@PathVariable(value = "userId") Long userId,
     		Model model) {
     	Lesson lesson = lessonRepos.findById(lessonId).orElseThrow();
+    	
     	List<Question> questions = lesson.getQuestions();
+    	
     	model.addAttribute("lesson",lesson);
     	model.addAttribute("questions", questions);
     	return "interview";
@@ -72,12 +94,12 @@ public class StudentController {
     		answerRepository.save(answer);
     		i++;
     	}
-//    	Set<Question> questions = lesson.getQuestions();
-//    	for(Question q : questions) {
-//    		Answer answer = new Answer(LocalDate.now().toString(), answerContent, user, q, lesson);
-//    		user.getAnswer().add(answer);
-//    		answerRepository.save(answer);
-//    	}
+    	
+    	UserLesson userLesson = new UserLesson(user, lesson);
+    	userLesson.setSignOfCompleteness(true);
+    	userLessonRepository.save(userLesson);
+
+    	
     	return "redirect:/completed-lections/{userId}";
 	}
 }

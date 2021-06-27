@@ -44,10 +44,17 @@ create table user_role (
 
 create table usr (
     id bigint identity not null, 
-    active bit not null, 
-    password varchar(255), 
-    username varchar(255), 
+    active bit not null,
+    password varchar(255),
+    username varchar(255),
     primary key (id)
+)
+
+create table user_lesson (
+	id bigint identity not null,
+	user_id bigint,
+	sign_of_completeness bit not null, 
+	lesson_id bigint
 )
 
 alter table lesson_questions 
@@ -69,7 +76,15 @@ alter table answer_user
 alter table answer_user 
     add constraint answer_user_usr_fk
     foreign key (user_id) references usr
+    
+alter table user_lesson
+	add constraint user_lesson_usr_fk
+	foreign key (user_id) references usr
 
+alter table user_lesson
+	add constraint user_lesson_lesson_fk
+	foreign key (lesson_id) references lesson
+	
 alter table lesson 
     add constraint lesson_usr_fk
     foreign key (user_id) references usr

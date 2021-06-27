@@ -11,20 +11,26 @@
     <@l.logout />
 </div>
 <b>Список лекций:</b>
-<#list lessons as lesson>
+<#list lessons as les, usles>
     <div>
-        <span>${lesson.topic}</span>
-        <span>${lesson.dateOfClass}</span>
-        <#if lesson.signOfCompleteness>
-        	<#if lesson.lectureFile??>
-		        <span><a href="/files/${lesson.lectureFile}" download>Скачать файл</a></span>
+        <span>${les.topic}</span>
+        <span>${les.dateOfClass}</span>
+        <#if les.signOfCompleteness>
+        	<#if les.lectureFile??>
+		        <span><a href="/files/${les.lectureFile}" download>Скачать файл</a></span>
 	        </#if>
         </#if>
-        <#if lesson.signOfCompleteness>
-	        <div><a href="/completed-lections/${currentUserId}/interview/${lesson.id}">Пройти тестирование</a></div>
-        </#if>
+        <#if les.signOfCompleteness>
+        	<#if usles??>
+		    	Тестирование пройдено
+			<#else>
+	    		<div><a href="/completed-lections/${currentUserId}/interview/${les.id}">Пройти тестирование</a></div>
+    		</#if>
+    	<#else>
+    		Лекция не завершена преподавателем
+    	</#if>
     </div>
 <#else>
-	No lessons
+		No lessons
 </#list>
 </@c.page>

@@ -11,7 +11,6 @@ import com.example.qualitycontrolsystem.entity.Lesson;
 import com.example.qualitycontrolsystem.entity.User;
 import com.example.qualitycontrolsystem.repos.AnswerRepository;
 import com.example.qualitycontrolsystem.repos.LessonRepository;
-import com.example.qualitycontrolsystem.repos.QuestionRepository;
 import com.example.qualitycontrolsystem.repos.UserRepository;
 
 import java.io.File;
@@ -33,8 +32,6 @@ import org.springframework.ui.Model;
 public class LecturerController {
 	@Autowired
 	private LessonRepository lessonRepository;
-	@Autowired
-	private QuestionRepository questionRepository;
 	@Autowired
 	private AnswerRepository answerRepository;
 	@Autowired

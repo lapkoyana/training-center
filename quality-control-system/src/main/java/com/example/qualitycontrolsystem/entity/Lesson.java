@@ -1,7 +1,6 @@
 package com.example.qualitycontrolsystem.entity;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -28,6 +27,9 @@ public class Lesson {
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Question> questions;
+	
+	@OneToMany(targetEntity=UserLesson.class, mappedBy="lesson")
+	private List<UserLesson> userLesson;
 	
 	public Lesson() {
 	}
