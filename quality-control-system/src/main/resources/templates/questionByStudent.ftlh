@@ -17,10 +17,14 @@
     <button type="submit">Вывод</button>
 </form>
 <br>
+<#if user?? && lesson??>
+	Ответы студента ${user.username} к лекции ${lesson.topic}:
+</#if>
 <#list answers as answer>
     <div>
         <div>${answer.question.content}</div>
-    	<div>${answer.content}</div>
+    	<div>Ответ: ${answer.content}</div>
+    	<div>Дата: ${answer.dateOfReply}</div>
     </div>
     <br>
 <#else>

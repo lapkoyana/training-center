@@ -3,7 +3,7 @@
 
 <@c.page>
 <#include "parts/security.ftlh">
-<h3>Привет, пользователь!</h3>
+<h3>Привет, ${user.username}!</h3>
 	<#if isLecturer><a href="/lections">Список лекций</a>
 					<a href="/students">Список студентов</a>
 	</#if>

@@ -41,7 +41,7 @@ public class QuestionController {
 			@PathVariable(value = "lessonId") Long lessonId,
 			@PathVariable(value = "questionId") Long questionId,
 			@RequestParam String content) {
-		Question question = questionRepository.findById(questionId).orElseThrow();
+		Question question = questionRepository.findById(questionId).orElse(null);
 		question.setContent(content);
 		questionRepository.save(question);
 		return "redirect:/lections/{lessonId}/questions";
@@ -69,7 +69,7 @@ public class QuestionController {
 			@PathVariable(value = "questionId") Long questionId
 			) {
 		Lesson lesson = lessonRepository.findById(lessonId).orElseThrow();
-		Question question = questionRepository.findById(questionId).orElseThrow();
+		Question question = questionRepository.findById(questionId).orElse(null);
 		
 		lesson.getQuestions().remove(question);
 		questionRepository.delete(question);

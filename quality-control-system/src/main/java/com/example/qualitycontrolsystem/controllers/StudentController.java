@@ -24,7 +24,7 @@ import com.example.qualitycontrolsystem.entity.UserLesson;
 import com.example.qualitycontrolsystem.repos.AnswerRepository;
 import com.example.qualitycontrolsystem.repos.LessonRepository;
 import com.example.qualitycontrolsystem.repos.UserLessonRepository;
-import com.example.qualitycontrolsystem.repos.UserRepository;
+import com.example.qualitycontrolsystem.service.UserService;
 
 @Controller
 @RequestMapping("/completed-lections")
@@ -33,7 +33,7 @@ public class StudentController {
 	@Autowired
 	private LessonRepository lessonRepos;
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	@Autowired
 	private AnswerRepository answerRepository;
 	@Autowired
@@ -67,7 +67,7 @@ public class StudentController {
     		@PathVariable(value = "lessonId") Long lessonId,
     		@PathVariable(value = "userId") Long userId,
     		Model model) {
-    	Lesson lesson = lessonRepos.findById(lessonId).orElseThrow();
+    	Lesson lesson = lessonRepos.findById(lessonId).orElse(null);
     	
     	List<Question> questions = lesson.getQuestions();
     	
@@ -82,8 +82,8 @@ public class StudentController {
     		@PathVariable(value = "lessonId") Long lessonId,
     		@RequestParam String answerContent
     		) {
-    	Lesson lesson = lessonRepos.findById(lessonId).orElseThrow();
-    	User user = userRepository.findById(userId).orElseThrow();
+    	Lesson lesson = lessonRepos.findById(lessonId).orElse(null);
+    	User user = userService.findById(userId);
     	
     	String[] contentOfAnswers = answerContent.split(",");
     	List<Question> questions = lesson.getQuestions();

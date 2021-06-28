@@ -63,7 +63,7 @@ alter table lesson_questions
 
 alter table answer 
     add constraint answer_question_fk
-    foreign key (question_id) references question
+    foreign key (question_id) references question on delete cascade
 
 alter table answer 
     add constraint answer_usr_fk
@@ -71,7 +71,7 @@ alter table answer
 
 alter table answer_user 
     add constraint answer_user_answer_fk
-    foreign key (answer_id) references answer
+    foreign key (answer_id) references answer on delete cascade
 
 alter table answer_user 
     add constraint answer_user_usr_fk
@@ -83,7 +83,7 @@ alter table user_lesson
 
 alter table user_lesson
 	add constraint user_lesson_lesson_fk
-	foreign key (lesson_id) references lesson
+	foreign key (lesson_id) references lesson on delete cascade
 	
 alter table lesson 
     add constraint lesson_usr_fk
@@ -91,11 +91,11 @@ alter table lesson
 
 alter table lesson_questions 
     add constraint lesson_questions_question_fk
-    foreign key (questions_id) references question
+    foreign key (questions_id) references question on delete cascade
 
 alter table lesson_questions 
     add constraint lesson_questions_lesson_fk
-    foreign key (lesson_id) references lesson
+    foreign key (lesson_id) references lesson on delete cascade
 
 alter table question 
     add constraint question_lesson_fk

@@ -11,7 +11,7 @@ import com.example.qualitycontrolsystem.entity.Lesson;
 import com.example.qualitycontrolsystem.entity.User;
 import com.example.qualitycontrolsystem.repos.AnswerRepository;
 import com.example.qualitycontrolsystem.repos.LessonRepository;
-import com.example.qualitycontrolsystem.repos.UserRepository;
+import com.example.qualitycontrolsystem.service.UserService;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class LecturerController {
 	@Autowired
 	private AnswerRepository answerRepository;
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	
 	@Value("${upload.path}")
 	private String uploadPath;
@@ -84,20 +84,23 @@ public class LecturerController {
     		@RequestParam String filter2,
     		Model model) {
     	Iterable<Answer> answers = null;
-    	
-    	Optional<User> user = userRepository.findById(Long.valueOf(filter1));
-    	ArrayList<User> res1 = new ArrayList<>();
-    	user.ifPresent(res1::add);
-    	
-    	Optional<Lesson> lesson = lessonRepository.findById(Long.valueOf(filter2));
-    	ArrayList<Lesson> res2 = new ArrayList<>();
-    	lesson.ifPresent(res2::add);
+    	User user = null;
+		Lesson lesson = null;
+		
+		try {
+			user = userService.findById(Long.valueOf(filter1));
+			lesson = lessonRepository.findById(Long.valueOf(filter2)).orElse(null);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
     	
     	if(filter1 != null && !filter1.isEmpty() && filter2 != null && !filter2.isEmpty()) {
-    		answers = answerRepository.findByUserAndLesson(res1.get(0), res2.get(0));
+    		answers = answerRepository.findByUserAndLesson(user, lesson);
     	}
     	
     	model.addAttribute("answers", answers);
+    	model.addAttribute("lesson", lesson);
+    	model.addAttribute("user", user);
     	return "questionByStudent";
     }
     
@@ -119,9 +122,9 @@ public class LecturerController {
     		@PathVariable(value = "id") Long id,
     		@RequestParam String topic,
     		@RequestParam String dateOfClass,
-    		@RequestParam boolean signOfCompleteness,
+    		@RequestParam(required = false) boolean signOfCompleteness,
     		@RequestParam MultipartFile file) throws IOException {
-    	Lesson lesson = lessonRepository.findById(id).orElseThrow();
+    	Lesson lesson = lessonRepository.findById(id).orElse(null);
     	lesson.setTopic(topic);
     	lesson.setDateOfClass(dateOfClass);
         lesson.setSignOfCompleteness(signOfCompleteness);
@@ -135,7 +138,7 @@ public class LecturerController {
     
     @PostMapping("/lections/{id}/remove")
     public String removeLection(@PathVariable(value = "id") Long id) {
-    	Lesson lesson = lessonRepository.findById(id).orElseThrow();
+    	Lesson lesson = lessonRepository.findById(id).orElse(null);
     	lessonRepository.delete(lesson);
     	
     	return "redirect:/lections";
