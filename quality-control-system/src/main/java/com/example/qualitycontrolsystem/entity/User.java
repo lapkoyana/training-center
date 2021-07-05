@@ -23,7 +23,7 @@ public class User implements UserDetails{
 	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 	@CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
 	@Enumerated(EnumType.STRING)
-	private Set<Role> role;
+	private Set<Role> roles;
 	
 	private boolean active;
 	
@@ -44,10 +44,10 @@ public class User implements UserDetails{
 	}
 
 	public boolean isLecturer() {
-		return role.contains(Role.LECTURER);
+		return roles.contains(Role.LECTURER);
 	}
 	public boolean isStudent() {
-		return role.contains(Role.STUDENT);
+		return roles.contains(Role.STUDENT);
 	}
 	public Long getId() {
 		return id;
@@ -62,10 +62,10 @@ public class User implements UserDetails{
 		this.username = username;
 	}
 	public Set<Role> getRole() {
-		return role;
+		return roles;
 	}
 	public void setRole(Set<Role> role) {
-		this.role = role;
+		this.roles = role;
 	}
 	public boolean isActive() {
 		return active;
