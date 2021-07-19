@@ -20,7 +20,6 @@ public class Question {
 	private Lesson lesson;
 	
 	public Question() {
-		super();
 	}
 	public Question(String content, Lesson lesson) {
 		this.content = content;

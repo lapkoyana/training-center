@@ -16,35 +16,43 @@ import com.example.qualitycontrolsystem.entity.Lesson;
 import com.example.qualitycontrolsystem.entity.Question;
 import com.example.qualitycontrolsystem.repos.LessonRepository;
 import com.example.qualitycontrolsystem.repos.QuestionRepository;
+import com.example.qualitycontrolsystem.service.LessonService;
+import com.example.qualitycontrolsystem.service.QuestionService;
 
 @Controller
 @RequestMapping("/lections")
 @PreAuthorize("hasAuthority('LECTURER')")
 public class QuestionController {
+	
+	//correct addresses
+	
 	@Autowired
-	private QuestionRepository questionRepository;
+	private QuestionService questionService;
 	@Autowired
-	private LessonRepository lessonRepository;
+	private LessonService lessonService;
 	
 	@GetMapping("{lesson}/questions")
-    public String questionListPage(
+    public List<Question> getQuestions(
     		@PathVariable(value = "lesson") Lesson lesson,
     		Model model) {
-		List<Question> questions = lesson.getQuestions();
-        model.addAttribute("questions", questions);
-        model.addAttribute("lesson", lesson);
-        return "questionList";
+		
+		//here the questions are displayed according to the lecture
+		return questionService.getAllQuestions();
     }
 	
+	//
 	@PostMapping("/{lessonId}/questions/{questionId}")
 	public String editQuestion(
 			@PathVariable(value = "lessonId") Long lessonId,
 			@PathVariable(value = "questionId") Long questionId,
 			@RequestParam String content) {
-		Question question = questionRepository.findById(questionId).orElse(null);
-		question.setContent(content);
-		questionRepository.save(question);
-		return "redirect:/lections/{lessonId}/questions";
+		
+		Lesson lesson = lessonService.getLesson(lessonId);
+		Question question = new Question(content, lesson);
+		
+		questionService.updateQuestion(question, questionId);
+		
+		return null;
 	}
 	
 	@PostMapping("/{id}/questions")
@@ -52,15 +60,13 @@ public class QuestionController {
 			@PathVariable(value = "id") Long id,
 			@RequestParam String content,
 			Model model) {
-		Lesson lesson = lessonRepository.findById(id).orElseThrow();
+		
+		Lesson lesson = lessonService.getLesson(id);
 		Question question = new Question(content, lesson);
-		lesson.getQuestions().add(question);
 		
-		model.addAttribute("lesson", lesson);
+		questionService.addQuestion(question);
 		
-		questionRepository.save(question);
-		
-		return "redirect:/lections/{id}/questions";
+		return null;
 	}
 	
 	@PostMapping("/{lessonId}/questions/{questionId}/remove")
@@ -68,12 +74,13 @@ public class QuestionController {
 			@PathVariable(value = "lessonId") Long lessonId,
 			@PathVariable(value = "questionId") Long questionId
 			) {
-		Lesson lesson = lessonRepository.findById(lessonId).orElseThrow();
-		Question question = questionRepository.findById(questionId).orElse(null);
+		//need to also delete in the lesson object
+		Lesson lesson = lessonService.getLesson(lessonId);
+		//will need to find out the index
+		lesson.getQuestions().remove(0);
 		
-		lesson.getQuestions().remove(question);
-		questionRepository.delete(question);
+		questionService.deleteQuestion(questionId);
 		
-		return "redirect:/lections/{lessonId}/questions";
+		return null;
 	}
 }

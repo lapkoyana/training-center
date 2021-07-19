@@ -11,39 +11,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.qualitycontrolsystem.entity.Answer;
 import com.example.qualitycontrolsystem.entity.Lesson;
-import com.example.qualitycontrolsystem.entity.User;
-import com.example.qualitycontrolsystem.repos.AnswerRepository;
-import com.example.qualitycontrolsystem.repos.LessonRepository;
+import com.example.qualitycontrolsystem.service.AnswerService;
+import com.example.qualitycontrolsystem.service.LessonService;
 import com.example.qualitycontrolsystem.service.UserService;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 
 @RestController
 @RequestMapping("/lections")
 @PreAuthorize("hasAuthority('LECTURER')")
 public class LecturerController {
+	
 	@Autowired
-	private LessonRepository lessonRepository;
+	private LessonService lessonServise;
+	
 	@Autowired
-	private AnswerRepository answerRepository;
+	private AnswerService answerService;
+	
 	@Autowired
 	private UserService userService;
 	
@@ -52,35 +43,32 @@ public class LecturerController {
 	
 	@GetMapping
 	public List<Lesson> getLessons() {
-		return lessonRepository.findAll();
+		return lessonServise.getAllLessons();
 	}
 	
 	@GetMapping("/{id}")
 	public Lesson getLesson(@PathVariable Long id) {
-		return lessonRepository.findById(id).orElseThrow(RuntimeException::new);
+		return lessonServise.getLesson(id);
 	}
 	
 	@PostMapping
 	public ResponseEntity<Lesson> createLesson(@RequestBody Lesson lesson) throws URISyntaxException {
-		Lesson savedLesson = lessonRepository.save(lesson);
-		return ResponseEntity.created(new URI("/lections/" + savedLesson.getId())).body(savedLesson);
+		lessonServise.addLesson(lesson);
+		return null;
+//		return ResponseEntity.created(new URI("/lections/" + savedLesson.getId())).body(savedLesson);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Lesson> updateLesson(@PathVariable Long id,
+	public ResponseEntity<Lesson> updateLesson(@PathVariable long id,
 											   @RequestBody Lesson lesson) {
-		Lesson currentLesson = lessonRepository.findById(id).orElseThrow(RuntimeException::new);
-		currentLesson.setTopic(lesson.getTopic());
-		currentLesson.setDateOfClass(lesson.getDateOfClass());
-		currentLesson.setSignOfCompleteness(lesson.isSignOfCompleteness());
-		currentLesson.setLectureFile(lesson.getLectureFile());
-		currentLesson = lessonRepository.save(lesson);
-		return ResponseEntity.ok(currentLesson);
+		lessonServise.updateLesson(lesson, id);
+		return null;
+//		return ResponseEntity.ok(currentLesson);
 	}
 	
 	@DeleteMapping
 	public ResponseEntity<Lesson> deleteLesson(@PathVariable Long id){
-		lessonRepository.deleteById(id);
+		lessonServise.deleteLesson(id);
 		return ResponseEntity.ok().build();
 	}
 	
