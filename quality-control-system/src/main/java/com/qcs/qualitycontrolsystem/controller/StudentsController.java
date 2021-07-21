@@ -30,7 +30,8 @@ public class StudentsController {
 
 	@GetMapping
 	public List<Lesson> getLessons() {
-		return lessonServise.getAllLessons();
+		lessonServise.getAllLessons();
+		return null;
 	}
 
 	@GetMapping("/{lesson}/questions")

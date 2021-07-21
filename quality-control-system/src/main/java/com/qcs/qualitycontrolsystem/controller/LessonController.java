@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qcs.qualitycontrolsystem.dto.LessonDto;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
 import com.qcs.qualitycontrolsystem.service.LessonService;
 
@@ -29,24 +30,25 @@ public class LessonController {
 
 	@GetMapping
 	public List<Lesson> getLessons() {
-		return lessonServise.getAllLessons();
+		lessonServise.getAllLessons();
+		return null;
 	}
 
 	@GetMapping("/{id}")
-	public Lesson getLesson(@PathVariable Long id) {
-		return lessonServise.getLesson(id);
+	public void getLesson(@PathVariable Long id) {
+		lessonServise.getLesson(id);
 	}
 
 	@PostMapping
-	public Lesson addLesson(@RequestBody Lesson lesson) {
+	public Lesson addLesson(@RequestBody LessonDto lesson) {
 		lessonServise.saveLesson(lesson);
-		return lesson;
+		return null;
 	}
 
 	@PutMapping
-	public Lesson updateLesson(@RequestBody Lesson lesson) {
+	public Lesson updateLesson(@RequestBody LessonDto lesson) {
 		lessonServise.saveLesson(lesson);
-		return lesson;
+		return null;
 	}
 
 	@DeleteMapping("{id}")

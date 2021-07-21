@@ -2,16 +2,15 @@ package com.qcs.qualitycontrolsystem.service;
 
 import java.util.List;
 
-import com.qcs.qualitycontrolsystem.entity.Lesson;
-import com.qcs.qualitycontrolsystem.entity.Question;
+import com.qcs.qualitycontrolsystem.dto.LessonDto;
 
 public interface LessonService {
 
-	public List<Lesson> getAllLessons();
+	public List<LessonDto> getAllLessons();
 
-	public Lesson getLesson(long id);
+	public LessonDto getLesson(long id);
 
-	public void saveLesson(Lesson lesson);
+	public void saveLesson(LessonDto lesson);
 
 	public void deleteLesson(long id);
 }

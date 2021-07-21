@@ -49,6 +49,7 @@ public class User {//implements UserDetails{
 	public boolean isStudent() {
 		return role.contains(Role.STUDENT);
 	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -89,11 +90,6 @@ public class User {//implements UserDetails{
 	}
 
 //	@Override
-//	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		return getRole();
-//	}
-//
-//	@Override
 //	public boolean isAccountNonExpired() {
 //		return true;
 //	}
@@ -112,5 +108,9 @@ public class User {//implements UserDetails{
 //	public boolean isEnabled() {
 //		return isActive();
 //	}
-	
+//
+//	@Override
+//	public Collection<? extends GrantedAuthority> getAuthorities() {
+//		return getRole();
+//	}
 }

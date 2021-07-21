@@ -13,7 +13,7 @@ import com.qcs.qualitycontrolsystem.entity.User;
 import com.qcs.qualitycontrolsystem.repos.UserRepository;
 
 @Service
-public class UserService { //implements UserDetailsService {
+public class UserService {//implements UserDetailsService {
 	
 	@Autowired
     private UserRepository userRepository;
