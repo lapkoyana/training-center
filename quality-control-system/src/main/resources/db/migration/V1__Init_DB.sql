@@ -20,7 +20,6 @@ create table lesson (
     lecture_file varchar(255), 
     sign_of_completeness bit not null, 
     topic varchar(255), 
-    user_id bigint, 
     primary key (id)
 )
 
@@ -84,10 +83,6 @@ alter table user_lesson
 alter table user_lesson
 	add constraint user_lesson_lesson_fk
 	foreign key (lesson_id) references lesson on delete cascade
-	
-alter table lesson 
-    add constraint lesson_usr_fk
-    foreign key (user_id) references usr
 
 alter table lesson_questions 
     add constraint lesson_questions_question_fk

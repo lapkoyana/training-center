@@ -2,20 +2,21 @@ package com.qcs.qualitycontrolsystem.service;
 
 import java.util.List;
 
+import com.qcs.qualitycontrolsystem.dto.QuestionDto;
+import com.qcs.qualitycontrolsystem.dto.QuestionDtoWithId;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
-import com.qcs.qualitycontrolsystem.entity.Question;
 
 public interface QuestionService {
 
-	public List<Question> getAllQuestions();
+	public List<QuestionDtoWithId> getAllQuestions();
 
-	public Question getQuestion(long id);
+	public QuestionDtoWithId getQuestion(long id);
 
-	public List<Question> getQuestionsByLesson(Lesson lesson);
+	public List<QuestionDtoWithId> getQuestionsByLesson(long lessonId);
 
-	public void addQuestion(Lesson lesson, Question question);
+	public void addQuestion(long lesson, QuestionDto question);
 
-	public void updateQuestion(Lesson lesson, Question question);
+	public void updateQuestion(long lessonId, QuestionDtoWithId question);
 
-	public void deleteQuestion(Lesson lesson, long id);
+	public void deleteQuestion(long lesson, long id);
 }

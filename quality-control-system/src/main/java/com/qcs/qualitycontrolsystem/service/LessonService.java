@@ -3,14 +3,17 @@ package com.qcs.qualitycontrolsystem.service;
 import java.util.List;
 
 import com.qcs.qualitycontrolsystem.dto.LessonDto;
+import com.qcs.qualitycontrolsystem.dto.LessonDtoWithId;
 
 public interface LessonService {
 
-	public List<LessonDto> getAllLessons();
+	public List<LessonDtoWithId> getAllLessons();
 
-	public LessonDto getLesson(long id);
+	public LessonDtoWithId getLesson(long id);
 
-	public void saveLesson(LessonDto lesson);
+	public void addLesson(LessonDto lesson);
+
+	public void updateLesson(LessonDtoWithId lesson);
 
 	public void deleteLesson(long id);
 }

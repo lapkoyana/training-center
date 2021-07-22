@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qcs.qualitycontrolsystem.dto.LessonDto;
+import com.qcs.qualitycontrolsystem.dto.LessonDtoWithId;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
 import com.qcs.qualitycontrolsystem.service.LessonService;
 
@@ -17,6 +18,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/lections")
@@ -29,31 +32,32 @@ public class LessonController {
 	private String uploadPath;
 
 	@GetMapping
-	public List<Lesson> getLessons() {
-		lessonServise.getAllLessons();
-		return null;
+	public ResponseEntity<?> getLessons() {
+		List<LessonDtoWithId> lessonsDto = lessonServise.getAllLessons();
+		return ResponseEntity.ok(lessonsDto);
 	}
 
 	@GetMapping("/{id}")
-	public void getLesson(@PathVariable Long id) {
-		lessonServise.getLesson(id);
+	public ResponseEntity<?> getLesson(@PathVariable Long id) {
+		LessonDtoWithId lessonDto = lessonServise.getLesson(id);
+		return ResponseEntity.ok(lessonDto);
 	}
 
 	@PostMapping
-	public Lesson addLesson(@RequestBody LessonDto lesson) {
-		lessonServise.saveLesson(lesson);
-		return null;
+	public ResponseEntity<?> addLesson(@RequestBody LessonDto lessonDto) {
+		lessonServise.addLesson(lessonDto);
+		return ResponseEntity.ok().body(HttpStatus.CREATED);
 	}
 
 	@PutMapping
-	public Lesson updateLesson(@RequestBody LessonDto lesson) {
-		lessonServise.saveLesson(lesson);
-		return null;
+	public ResponseEntity<?> updateLesson(@RequestBody LessonDtoWithId lessonDto) {
+		lessonServise.updateLesson(lessonDto);
+		return ResponseEntity.ok().body(HttpStatus.OK);
 	}
 
 	@DeleteMapping("{id}")
-	public String deleteLesson(@PathVariable Long id) {
+	public ResponseEntity<?> deleteLesson(@PathVariable Long id) {
 		lessonServise.deleteLesson(id);
-		return "Done!";
+		return ResponseEntity.ok().body(HttpStatus.OK);
 	}
 }

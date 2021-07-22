@@ -3,6 +3,8 @@ package com.qcs.qualitycontrolsystem.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qcs.qualitycontrolsystem.dto.AnswerDto;
+import com.qcs.qualitycontrolsystem.dto.LessonDtoWithId;
+import com.qcs.qualitycontrolsystem.dto.QuestionDtoWithId;
 import com.qcs.qualitycontrolsystem.entity.Answer;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
 import com.qcs.qualitycontrolsystem.entity.Question;
@@ -29,20 +34,21 @@ public class StudentsController {
 	private AnswerService answerService;
 
 	@GetMapping
-	public List<Lesson> getLessons() {
-		lessonServise.getAllLessons();
-		return null;
+	public ResponseEntity<?> getLessons() {
+		List<LessonDtoWithId> lessonsDto = lessonServise.getAllLessons();
+		return ResponseEntity.ok(lessonsDto);
 	}
 
-	@GetMapping("/{lesson}/questions")
-	public List<Question> getQuestions(@PathVariable Lesson lesson) {
-		return questionServise.getQuestionsByLesson(lesson);
+	@GetMapping("/{lessonId}/questions")
+	public ResponseEntity<?> getQuestions(@PathVariable long lessonId) {
+		List<QuestionDtoWithId> questionsDto = questionServise.getQuestionsByLesson(lessonId);
+		return ResponseEntity.ok(questionsDto);
 	}
 
-	@PostMapping("/{lesson}/questions")
-	public List<Answer> addAnswers(@PathVariable Lesson lesson, @RequestBody List<Answer> answers) {
-		answerService.addAnswer(answers, lesson);
-		return answers;
+	// don't forget about the user
+	@PostMapping("/{lessonId}/questions")
+	public ResponseEntity<?> addAnswers(@PathVariable long lessonId, @RequestBody List<AnswerDto> answersDto) {
+		answerService.addAnswer(answersDto, lessonId);
+		return ResponseEntity.ok().body(HttpStatus.CREATED);
 	}
-
 }

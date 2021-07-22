@@ -12,34 +12,41 @@ public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String content;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "lesson_id")
 	private Lesson lesson;
-	
+
 	public Question() {
 	}
+
 	public Question(String content, Lesson lesson) {
 		this.content = content;
 		this.lesson = lesson;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
 	public Lesson getLesson() {
 		return lesson;
 	}
+
 	public void setLesson(Lesson lesson) {
 		this.lesson = lesson;
 	}

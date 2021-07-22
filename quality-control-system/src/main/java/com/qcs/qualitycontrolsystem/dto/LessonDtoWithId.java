@@ -1,10 +1,19 @@
 package com.qcs.qualitycontrolsystem.dto;
 
-public class LessonDto {
+public class LessonDtoWithId {
+	private Long id;
 	private String topic;
 	private String dateOfClass;
 	private String lectureFile;
 	private boolean signOfCompleteness;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getTopic() {
 		return topic;

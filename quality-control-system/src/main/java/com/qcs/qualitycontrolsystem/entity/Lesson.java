@@ -22,10 +22,8 @@ public class Lesson {
 	private String lectureFile;
 	private boolean signOfCompleteness;
 	
-	@ManyToOne
-	private User user;
-	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE,
+			CascadeType.REFRESH, CascadeType.REMOVE})
 	private List<Question> questions;
 	
 	@OneToMany(targetEntity=UserLesson.class, mappedBy="lesson")
@@ -34,11 +32,10 @@ public class Lesson {
 	public Lesson() {
 	}
 	
-	public Lesson(String topic, String dateOfClass, boolean signOfCompleteness, User user) {
+	public Lesson(String topic, String dateOfClass, boolean signOfCompleteness) {
 		this.topic = topic;
 		this.dateOfClass = dateOfClass;
 		this.signOfCompleteness = signOfCompleteness;
-		this.user = user;
 	}
 	public Long getId() {
 		return id;
@@ -69,12 +66,6 @@ public class Lesson {
 	}
 	public void setSignOfCompleteness(boolean signOfCompleteness) {
 		this.signOfCompleteness = signOfCompleteness;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public List<Question> getQuestions() {
