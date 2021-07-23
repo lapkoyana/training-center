@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qcs.qualitycontrolsystem.dto.LessonDto;
 import com.qcs.qualitycontrolsystem.dto.LessonDtoWithId;
-import com.qcs.qualitycontrolsystem.entity.Lesson;
 import com.qcs.qualitycontrolsystem.service.LessonService;
 
 import java.util.List;

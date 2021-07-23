@@ -1,0 +1,201 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="User (generated)" id="1627041800853-1">
+        <createTable tableName="user_lesson">
+            <column autoIncrement="true" computed="false" name="id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="user_id" type="bigint"/>
+            <column computed="false" name="sign_of_completeness" type="bit">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="lesson_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-2">
+        <createTable tableName="user_role">
+            <column computed="false" name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="role" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-3">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/user_role.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="user_role">
+            <column header="user_id" name="user_id" type="NUMERIC"/>
+            <column header="role" name="role" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-4">
+        <createTable tableName="answer">
+            <column autoIncrement="true" computed="false" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK__answer__3213E83FB28B6118"/>
+            </column>
+            <column computed="false" name="content" type="varchar(255)"/>
+            <column computed="false" name="date_of_reply" type="varchar(255)"/>
+            <column computed="false" name="question_id" type="bigint"/>
+            <column computed="false" name="lesson_id" type="bigint"/>
+            <column computed="false" name="user_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-5">
+	    <sql dbms="mssql">
+	        SET IDENTITY_INSERT answer ON;
+	    </sql>
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/answer.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="answer">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="content" name="content" type="STRING"/>
+            <column header="date_of_reply" name="date_of_reply" type="STRING"/>
+            <column header="question_id" name="question_id" type="NUMERIC"/>
+            <column header="lesson_id" name="lesson_id" type="NUMERIC"/>
+            <column header="user_id" name="user_id" type="NUMERIC"/>
+        </loadData>
+        <sql dbms="mssql">
+	        SET IDENTITY_INSERT answer OFF;
+	    </sql>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-6">
+        <createTable tableName="answer_user">
+            <column computed="false" name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="answer_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-7">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/answer_user.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="answer_user">
+            <column header="user_id" name="user_id" type="NUMERIC"/>
+            <column header="answer_id" name="answer_id" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-8">
+        <createTable tableName="lesson_questions">
+            <column computed="false" name="lesson_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK__lesson_q__25EF282A978E6436"/>
+            </column>
+            <column computed="false" name="questions_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK__lesson_q__25EF282A978E6436"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-9">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/lesson_questions.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="lesson_questions">
+            <column header="lesson_id" name="lesson_id" type="NUMERIC"/>
+            <column header="questions_id" name="questions_id" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-10">
+        <createTable tableName="lesson">
+            <column autoIncrement="true" computed="false" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK__lesson__3213E83F9973A2AE"/>
+            </column>
+            <column computed="false" name="date_of_class" type="varchar(255)"/>
+            <column computed="false" name="lecture_file" type="varchar(255)"/>
+            <column computed="false" name="sign_of_completeness" type="bit">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="topic" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-11">
+	    <sql dbms="mssql">
+	        SET IDENTITY_INSERT lesson ON;
+	    </sql>
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/lesson.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="lesson">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="date_of_class" name="date_of_class" type="STRING"/>
+            <column header="lecture_file" name="lecture_file" type="skip"/>
+            <column header="sign_of_completeness" name="sign_of_completeness" type="BOOLEAN"/>
+            <column header="topic" name="topic" type="STRING"/>
+        </loadData>
+        <sql dbms="mssql">
+	        SET IDENTITY_INSERT lesson OFF;
+	    </sql>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-12">
+        <createTable tableName="question">
+            <column autoIncrement="true" computed="false" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK__question__3213E83F0A959831"/>
+            </column>
+            <column computed="false" name="content" type="varchar(255)"/>
+            <column computed="false" name="lesson_id" type="bigint"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-13">
+	    <sql dbms="mssql">
+	        SET IDENTITY_INSERT question ON;
+	    </sql>
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/question.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="question">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="content" name="content" type="STRING"/>
+            <column header="lesson_id" name="lesson_id" type="NUMERIC"/>
+        </loadData>
+        <sql dbms="mssql">
+	        SET IDENTITY_INSERT question OFF;
+	    </sql>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-14">
+        <createTable tableName="usr">
+            <column autoIncrement="true" computed="false" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK__usr__3213E83F5928BE72"/>
+            </column>
+            <column computed="false" name="active" type="bit">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="password" type="varchar(255)"/>
+            <column computed="false" name="username" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-15">
+	    <sql dbms="mssql">
+	        SET IDENTITY_INSERT usr ON;
+	    </sql>
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/usr.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="usr">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="active" name="active" type="BOOLEAN"/>
+            <column header="password" name="password" type="STRING"/>
+            <column header="username" name="username" type="STRING"/>
+        </loadData>
+        <sql dbms="mssql">
+	        SET IDENTITY_INSERT usr OFF;
+	    </sql>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-16">
+        <addForeignKeyConstraint baseColumnNames="answer_id" baseTableName="answer_user" constraintName="answer_user_answer_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="answer" validate="true"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-17">
+        <addPrimaryKey columnNames="answer_id, user_id" constraintName="PK__answer_u__D8E9A068C63482F0" tableName="answer_user"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-18">
+        <addUniqueConstraint columnNames="questions_id" constraintName="lesson_questions_uk" tableName="lesson_questions"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-19">
+        <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="question" constraintName="question_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-20">
+        <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="user_lesson" constraintName="user_lesson_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-21">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_lesson" constraintName="user_lesson_usr_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="usr" validate="true"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-22">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_role" constraintName="user_role_usr_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="usr" validate="true"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-23">
+        <addForeignKeyConstraint baseColumnNames="question_id" baseTableName="answer" constraintName="answer_question_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="question" validate="true"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-24">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="answer" constraintName="answer_usr_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="usr" validate="true"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-25">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="answer_user" constraintName="answer_user_usr_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="usr" validate="true"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-26">
+        <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="lesson_questions" constraintName="lesson_questions_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
+    </changeSet>
+    <changeSet author="User (generated)" id="1627041800853-27">
+        <addForeignKeyConstraint baseColumnNames="questions_id" baseTableName="lesson_questions" constraintName="lesson_questions_question_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="question" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
