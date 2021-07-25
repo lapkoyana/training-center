@@ -38,14 +38,14 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public void addAnswer(List<AnswerDto> answersDto, long lessonId) {
+	public void addAnswer(List<AnswerDto> answersDto, long lessonId, User user) {
 		Lesson lesson = lessonRepository.findById(lessonId).orElseThrow();
 		List<Answer> answers = new ArrayList<>();
 
 		for (int i = 0; i < answersDto.size(); i++) {
 			AnswerDto a = answersDto.get(i);
 			Question question = lesson.getQuestions().get(i);
-			answers.add(answerMapping.mapToAnswer(a, lesson, question));
+			answers.add(answerMapping.mapToAnswer(a, lesson, question, user));
 		}
 
 		answerRepository.saveAll(answers);

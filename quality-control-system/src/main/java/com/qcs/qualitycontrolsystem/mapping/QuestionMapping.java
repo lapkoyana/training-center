@@ -14,7 +14,6 @@ public class QuestionMapping {
 		QuestionDtoWithId dto = new QuestionDtoWithId();
 		dto.setId(question.getId());
 		dto.setContent(question.getContent());
-		dto.setLessonId(question.getLesson().getId());
 		return dto;
 	}
 

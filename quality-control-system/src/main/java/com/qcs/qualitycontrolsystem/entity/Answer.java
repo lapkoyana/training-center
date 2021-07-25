@@ -28,7 +28,6 @@ public class Answer {
 	@ManyToOne
 	private Lesson lesson;
 
-	// do I need this many-to-many relationship?
 	@ManyToMany
 	@JoinTable(name = "answer_user", joinColumns = @JoinColumn(name = "answer_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> users = new HashSet<User>();

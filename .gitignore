@@ -4,7 +4,11 @@ bin/
 *.war
 target/
 .idea
-.project
+
 .mvn/wrapper/maven-wrapper.jarv
-uploads
-node_modules/
+uploads/*
+!uploads/.gitkeep
+
+.settings/
+.classpath
+.project

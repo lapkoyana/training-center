@@ -1,13 +1,19 @@
 package com.qcs.qualitycontrolsystem.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.qcs.qualitycontrolsystem.dto.LessonDto;
 import com.qcs.qualitycontrolsystem.dto.LessonDtoWithId;
+import com.qcs.qualitycontrolsystem.dto.LessonDtoWithIdResp;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
 import com.qcs.qualitycontrolsystem.mapping.LessonMapping;
 import com.qcs.qualitycontrolsystem.repos.LessonRepository;
@@ -19,29 +25,57 @@ public class LessonServiceImpl implements LessonService {
 	private LessonRepository lessonRepository;
 	@Autowired
 	private LessonMapping lessonMapping;
+	
+	@Value("${upload.path}")
+	private String uploadPath;
 
 	@Override
-	public List<LessonDtoWithId> getAllLessons() {
+	public List<LessonDtoWithIdResp> getAllLessons() {
 		return lessonRepository.findAll().stream().map(lessonMapping::mapToLessonDto).collect(Collectors.toList());
 	}
 
 	@Override
-	public LessonDtoWithId getLesson(long id) {
+	public LessonDtoWithIdResp getLesson(long id) {
 		return lessonMapping.mapToLessonDto(lessonRepository.findById(id).orElse(null));
 	}
 
 	@Override
-	public void addLesson(LessonDto lesson) {
-		lessonRepository.save(lessonMapping.mapToLesson(lesson));
+	public void addLesson(LessonDto lessonDto, MultipartFile file) {
+		Lesson lesson = lessonMapping.mapToLesson(lessonDto);
+		saveFile(lesson, file);
+		lessonRepository.save(lesson);
 	}
 
 	@Override
-	public void updateLesson(LessonDtoWithId lesson) {
-		lessonRepository.save(lessonMapping.mapToLesson(lesson));
+	public void updateLesson(LessonDtoWithId lessonDto, MultipartFile file) {
+		Lesson lesson = lessonMapping.mapToLesson(lessonDto);
+		saveFile(lesson, file);
+		lessonRepository.save(lesson);
 	}
 
 	@Override
 	public void deleteLesson(long id) {
 		lessonRepository.deleteById(id);
+	}
+	
+	private void saveFile(Lesson lesson, MultipartFile file) {
+		if (file != null && !file.getOriginalFilename().isEmpty()) {
+			File uploadFile = new File(uploadPath);
+			
+			if(!uploadFile.exists()) {
+				uploadFile.mkdir();
+			}
+			
+			 String uuidFile = UUID.randomUUID().toString();
+	         String resultFilename = uuidFile + "." + file.getOriginalFilename();
+	
+	         try {
+				file.transferTo(new File(uploadPath + "/" + resultFilename));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+	
+	         lesson.setLectureFile(resultFilename);
+		}
 	}
 }

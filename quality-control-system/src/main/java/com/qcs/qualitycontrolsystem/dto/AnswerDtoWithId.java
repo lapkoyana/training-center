@@ -4,8 +4,9 @@ public class AnswerDtoWithId {
 	private Long id;
 	private String dateOfReply;
 	private String content;
-	private Long questionId;
-	private Long userId;
+	private String question;
+	private String user;
+	private String lesson;
 
 	public Long getId() {
 		return id;
@@ -31,19 +32,27 @@ public class AnswerDtoWithId {
 		this.content = content;
 	}
 
-	public Long getQuestionId() {
-		return questionId;
+	public String getQuestion() {
+		return question;
 	}
 
-	public void setQuestionId(Long questionId) {
-		this.questionId = questionId;
+	public void setQuestion(String question) {
+		this.question = question;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public String getUser() {
+		return user;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getLesson() {
+		return lesson;
+	}
+
+	public void setLesson(String lesson) {
+		this.lesson = lesson;
 	}
 }

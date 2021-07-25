@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.qcs.qualitycontrolsystem.dto.QuestionDto;
 import com.qcs.qualitycontrolsystem.dto.QuestionDtoWithId;
-import com.qcs.qualitycontrolsystem.entity.Lesson;
 
 public interface QuestionService {
 

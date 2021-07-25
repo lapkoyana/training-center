@@ -12,7 +12,7 @@ public interface AnswerService {
 
 	public AnswerDtoWithId getAnswer(long id);
 
-	public void addAnswer(List<AnswerDto> answersDto, long lessonId);
+	public void addAnswer(List<AnswerDto> answersDto, long lessonId, User user);
 
 	public List<AnswerDtoWithId> getAnswersByLessonAndUser(long lesson, User user);
 

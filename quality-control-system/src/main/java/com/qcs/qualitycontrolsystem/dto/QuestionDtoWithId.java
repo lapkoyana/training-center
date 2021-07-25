@@ -3,7 +3,6 @@ package com.qcs.qualitycontrolsystem.dto;
 public class QuestionDtoWithId {
 	private Long id;
 	private String content;
-	private Long lessonId;
 
 	public Long getId() {
 		return id;
@@ -19,13 +18,5 @@ public class QuestionDtoWithId {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public Long getLessonId() {
-		return lessonId;
-	}
-
-	public void setLessonId(Long lessonId) {
-		this.lessonId = lessonId;
 	}
 }

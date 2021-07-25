@@ -1,9 +1,19 @@
 package com.qcs.qualitycontrolsystem.dto;
 
-public class LessonDto {
+public class LessonDtoWithIdResp {
+	private Long id;
 	private String topic;
 	private String dateOfClass;
+	private String lectureFile;
 	private boolean signOfCompleteness;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getTopic() {
 		return topic;
@@ -19,6 +29,14 @@ public class LessonDto {
 
 	public void setDateOfClass(String dateOfClass) {
 		this.dateOfClass = dateOfClass;
+	}
+	
+	public String getLectureFile() {
+		return lectureFile;
+	}
+
+	public void setLectureFile(String lectureFile) {
+		this.lectureFile = lectureFile;
 	}
 
 	public boolean isSignOfCompleteness() {
