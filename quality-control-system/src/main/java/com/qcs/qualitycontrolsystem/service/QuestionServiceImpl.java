@@ -19,7 +19,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	QuestionRepository questionRepository;
-	
+
 	QuestionMapping questionMapping;
 	@Autowired
 	LessonRepository lessonRepository;

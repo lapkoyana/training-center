@@ -24,7 +24,7 @@ public class AnswerServiceImpl implements AnswerService {
 	AnswerRepository answerRepository;
 	@Autowired
 	LessonRepository lessonRepository;
-	
+
 	AnswerMapping answerMapping;
 
 	@Override

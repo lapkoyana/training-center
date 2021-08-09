@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 //import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +24,10 @@ import com.qcs.qualitycontrolsystem.service.AnswerService;
 import com.qcs.qualitycontrolsystem.service.LessonService;
 import com.qcs.qualitycontrolsystem.service.QuestionService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/lessons")
+@PreAuthorize("hasAuthority('STUDENT')")
 public class StudentsController {
 
 	@Autowired
@@ -47,9 +52,8 @@ public class StudentsController {
 	@PostMapping("/{lessonId}/questions")
 	public ResponseEntity<?> addAnswers(
 			@PathVariable long lessonId,
-			@RequestBody List<AnswerDto> answersDto) {
-//			,
-//			@AuthenticationPrincipal User user) {
+			@RequestBody List<AnswerDto> answersDto,
+			@AuthenticationPrincipal User user) {
 		answerService.addAnswer(answersDto, lessonId, null);
 		return ResponseEntity.ok().body(HttpStatus.CREATED);
 	}

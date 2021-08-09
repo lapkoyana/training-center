@@ -26,7 +26,7 @@ public class LessonServiceImpl implements LessonService {
 	private LessonRepository lessonRepository;
 	@Autowired
 	private LessonMapping lessonMapping;
-	
+
 	@Value("${upload.path}")
 	private String uploadPath;
 
@@ -68,25 +68,25 @@ public class LessonServiceImpl implements LessonService {
 	public void deleteLesson(long id) {
 		lessonRepository.deleteById(id);
 	}
-	
+
 	private void saveFile(Lesson lesson, MultipartFile file) {
 		if (file != null && !file.getOriginalFilename().isEmpty()) {
 			File uploadFile = new File(uploadPath);
-			
-			if(!uploadFile.exists()) {
+
+			if (!uploadFile.exists()) {
 				uploadFile.mkdir();
 			}
-			
-			 String uuidFile = UUID.randomUUID().toString();
-	         String resultFilename = uuidFile + "." + file.getOriginalFilename();
-	
-	         try {
+
+			String uuidFile = UUID.randomUUID().toString();
+			String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+			try {
 				file.transferTo(new File(uploadPath + "/" + resultFilename));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-	
-	         lesson.setLectureFile(resultFilename);
+
+			lesson.setLectureFile(resultFilename);
 		}
 	}
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +23,10 @@ import com.qcs.qualitycontrolsystem.entity.User;
 import com.qcs.qualitycontrolsystem.service.AnswerService;
 import com.qcs.qualitycontrolsystem.service.QuestionService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/lections")
+@PreAuthorize("hasAuthority('LECTURER')")
 public class QuestionController {
 
 	@Autowired
@@ -54,7 +58,6 @@ public class QuestionController {
 		return ResponseEntity.ok().body(HttpStatus.OK);
 	}
 
-	// этот адрес очень под сомнением!!!
 	@GetMapping("/{lessonId}/user/{user}/answers")
 	public ResponseEntity<?> getAnswers(@PathVariable long lessonId, @PathVariable User user) {
 		List<AnswerDtoWithId> answersDto = answerService.getAnswersByLessonAndUser(lessonId, user);
