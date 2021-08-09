@@ -1,8 +1,10 @@
 package com.qcs.qualitycontrolsystem.dto;
 
+import java.sql.Date;
+
 public class AnswerDtoWithId {
 	private Long id;
-	private String dateOfReply;
+	private Date dateOfReply;
 	private String content;
 	private String question;
 	private String user;
@@ -16,11 +18,11 @@ public class AnswerDtoWithId {
 		this.id = id;
 	}
 
-	public String getDateOfReply() {
+	public Date getDateOfReply() {
 		return dateOfReply;
 	}
 
-	public void setDateOfReply(String dateOfReply) {
+	public void setDateOfReply(Date dateOfReply) {
 		this.dateOfReply = dateOfReply;
 	}
 

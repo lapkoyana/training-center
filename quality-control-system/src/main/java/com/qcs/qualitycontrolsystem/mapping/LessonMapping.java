@@ -1,5 +1,7 @@
 package com.qcs.qualitycontrolsystem.mapping;
 
+import java.text.ParseException;
+
 import org.springframework.stereotype.Service;
 
 import com.qcs.qualitycontrolsystem.dto.LessonDto;
@@ -20,7 +22,7 @@ public class LessonMapping {
 		return dto;
 	}
 
-	public Lesson mapToLesson(LessonDto dto) {
+	public Lesson mapToLesson(LessonDto dto) throws ParseException {
 		Lesson lesson = new Lesson();
 		lesson.setTopic(dto.getTopic());
 		lesson.setDateOfClass(dto.getDateOfClass());
@@ -28,7 +30,7 @@ public class LessonMapping {
 		return lesson;
 	}
 
-	public Lesson mapToLesson(LessonDtoWithId dto) {
+	public Lesson mapToLesson(LessonDtoWithId dto) throws ParseException {
 		Lesson lesson = new Lesson();
 		lesson.setId(dto.getId());
 		lesson.setTopic(dto.getTopic());

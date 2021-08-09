@@ -1,14 +1,16 @@
 package com.qcs.qualitycontrolsystem.dto;
 
+import java.sql.Date;
+
 public class AnswerDto {
-	private String dateOfReply;
+	private Date dateOfReply;
 	private String content;
 
-	public String getDateOfReply() {
+	public Date getDateOfReply() {
 		return dateOfReply;
 	}
 
-	public void setDateOfReply(String dateOfReply) {
+	public void setDateOfReply(Date dateOfReply) {
 		this.dateOfReply = dateOfReply;
 	}
 

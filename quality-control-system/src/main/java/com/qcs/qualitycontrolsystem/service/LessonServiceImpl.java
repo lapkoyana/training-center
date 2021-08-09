@@ -2,6 +2,7 @@ package com.qcs.qualitycontrolsystem.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -41,16 +42,26 @@ public class LessonServiceImpl implements LessonService {
 
 	@Override
 	public void addLesson(LessonDto lessonDto, MultipartFile file) {
-		Lesson lesson = lessonMapping.mapToLesson(lessonDto);
-		saveFile(lesson, file);
-		lessonRepository.save(lesson);
+		Lesson lesson;
+		try {
+			lesson = lessonMapping.mapToLesson(lessonDto);
+			saveFile(lesson, file);
+			lessonRepository.save(lesson);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void updateLesson(LessonDtoWithId lessonDto, MultipartFile file) {
-		Lesson lesson = lessonMapping.mapToLesson(lessonDto);
-		saveFile(lesson, file);
-		lessonRepository.save(lesson);
+		Lesson lesson;
+		try {
+			lesson = lessonMapping.mapToLesson(lessonDto);
+			saveFile(lesson, file);
+			lessonRepository.save(lesson);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

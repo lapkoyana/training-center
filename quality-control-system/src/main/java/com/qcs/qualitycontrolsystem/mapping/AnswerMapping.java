@@ -1,7 +1,5 @@
 package com.qcs.qualitycontrolsystem.mapping;
 
-import org.springframework.stereotype.Service;
-
 import com.qcs.qualitycontrolsystem.dto.AnswerDto;
 import com.qcs.qualitycontrolsystem.dto.AnswerDtoWithId;
 import com.qcs.qualitycontrolsystem.entity.Answer;
@@ -9,7 +7,7 @@ import com.qcs.qualitycontrolsystem.entity.Lesson;
 import com.qcs.qualitycontrolsystem.entity.Question;
 import com.qcs.qualitycontrolsystem.entity.User;
 
-@Service
+
 public class AnswerMapping {
 
 	public AnswerDtoWithId mapToAnswerDto(Answer answer) {

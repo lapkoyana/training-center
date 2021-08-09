@@ -46,7 +46,7 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK__answer__3213E83FB28B6118"/>
             </column>
             <column computed="false" name="content" type="varchar(255)"/>
-            <column computed="false" name="date_of_reply" type="varchar(255)"/>
+            <column computed="false" name="date_of_reply" type="date"/>
             <column computed="false" name="question_id" type="bigint"/>
             <column computed="false" name="lesson_id" type="bigint"/>
             <column computed="false" name="user_id" type="bigint"/>
@@ -59,7 +59,7 @@
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/answer.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="answer">
             <column header="id" name="id" type="NUMERIC"/>
             <column header="content" name="content" type="STRING"/>
-            <column header="date_of_reply" name="date_of_reply" type="STRING"/>
+            <column header="date_of_reply" name="date_of_reply" type="date"/>
             <column header="question_id" name="question_id" type="NUMERIC"/>
             <column header="lesson_id" name="lesson_id" type="NUMERIC"/>
             <column header="user_id" name="user_id" type="NUMERIC"/>
@@ -105,7 +105,7 @@
             <column autoIncrement="true" computed="false" name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK__lesson__3213E83F9973A2AE"/>
             </column>
-            <column computed="false" name="date_of_class" type="varchar(255)"/>
+            <column computed="false" name="date_of_class" type="date"/>
             <column computed="false" name="lecture_file" type="varchar(255)"/>
             <column computed="false" name="sign_of_completeness" type="bit">
                 <constraints nullable="false"/>
@@ -119,7 +119,7 @@
 	    </sql>
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/lesson.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="lesson">
             <column header="id" name="id" type="NUMERIC"/>
-            <column header="date_of_class" name="date_of_class" type="STRING"/>
+            <column header="date_of_class" name="date_of_class" type="date"/>
             <column header="lecture_file" name="lecture_file" type="skip"/>
             <column header="sign_of_completeness" name="sign_of_completeness" type="BOOLEAN"/>
             <column header="topic" name="topic" type="STRING"/>
@@ -186,7 +186,7 @@
         <addUniqueConstraint columnNames="questions_id" constraintName="lesson_questions_uk" tableName="lesson_questions"/>
     </changeSet>
     <changeSet author="User (generated)" id="1627041800853-19">
-        <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="question" constraintName="question_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="question" constraintName="question_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
     </changeSet>
     <changeSet author="User (generated)" id="1627041800853-20">
         <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="user_lesson" constraintName="user_lesson_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
@@ -210,6 +210,6 @@
         <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="lesson_questions" constraintName="lesson_questions_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
     </changeSet>
     <changeSet author="User (generated)" id="1627041800853-27">
-        <addForeignKeyConstraint baseColumnNames="questions_id" baseTableName="lesson_questions" constraintName="lesson_questions_question_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="question" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="questions_id" baseTableName="lesson_questions" constraintName="lesson_questions_question_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="question" validate="true"/>
     </changeSet>
 </databaseChangeLog>

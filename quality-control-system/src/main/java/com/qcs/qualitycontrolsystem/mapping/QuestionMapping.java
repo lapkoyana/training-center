@@ -1,13 +1,10 @@
 package com.qcs.qualitycontrolsystem.mapping;
 
-import org.springframework.stereotype.Service;
-
 import com.qcs.qualitycontrolsystem.dto.QuestionDto;
 import com.qcs.qualitycontrolsystem.dto.QuestionDtoWithId;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
 import com.qcs.qualitycontrolsystem.entity.Question;
 
-@Service
 public class QuestionMapping {
 
 	public QuestionDtoWithId mapToQuestionDto(Question question) {

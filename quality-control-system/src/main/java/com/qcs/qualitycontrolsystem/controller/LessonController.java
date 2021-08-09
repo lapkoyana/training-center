@@ -46,7 +46,7 @@ public class LessonController {
 	@PostMapping
 	public ResponseEntity<?> addLesson(
 			@RequestParam("lesson") String lessonDtoString,
-			@RequestParam("file") MultipartFile file) throws JsonMappingException, JsonProcessingException {
+			@RequestParam(value = "file", required=false) MultipartFile file) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		LessonDto lessonDto = objectMapper.readValue(lessonDtoString, LessonDto.class);
 		lessonServise.addLesson(lessonDto, file);
@@ -55,8 +55,8 @@ public class LessonController {
 
 	@PutMapping
 	public ResponseEntity<?> updateLesson(
-			@RequestParam String lessonDtoString,
-			@RequestParam MultipartFile file) throws JsonMappingException, JsonProcessingException {
+			@RequestParam("lesson") String lessonDtoString,
+			@RequestParam(value = "file", required=false) MultipartFile file) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		LessonDtoWithId lessonDto = objectMapper.readValue(lessonDtoString, LessonDtoWithId.class);
 		lessonServise.updateLesson(lessonDto, file);

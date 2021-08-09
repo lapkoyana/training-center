@@ -1,5 +1,7 @@
 package com.qcs.qualitycontrolsystem.dto;
 
+import java.sql.Date;
+
 public class LessonDtoWithIdResp {
 	private Long id;
 	private String topic;
@@ -27,8 +29,12 @@ public class LessonDtoWithIdResp {
 		return dateOfClass;
 	}
 
-	public void setDateOfClass(String dateOfClass) {
-		this.dateOfClass = dateOfClass;
+	public void setDateOfClass(Date dateOfClass) {
+		if (dateOfClass == null) {
+			this.dateOfClass = "";
+		} else {
+			this.dateOfClass = dateOfClass.toString();	
+		}
 	}
 	
 	public String getLectureFile() {

@@ -1,5 +1,6 @@
 package com.qcs.qualitycontrolsystem.entity;
 
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class Answer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String dateOfReply;
+	private Date dateOfReply;
 	private String content;
 
 	@ManyToOne
@@ -35,7 +36,7 @@ public class Answer {
 	public Answer() {
 	}
 
-	public Answer(String dateOfReply, String content, User user, Question question, Lesson lesson) {
+	public Answer(Date dateOfReply, String content, User user, Question question, Lesson lesson) {
 		this.dateOfReply = dateOfReply;
 		this.content = content;
 		this.user = user;
@@ -51,11 +52,11 @@ public class Answer {
 		this.id = id;
 	}
 
-	public String getDateOfReply() {
+	public Date getDateOfReply() {
 		return dateOfReply;
 	}
 
-	public void setDateOfReply(String dateOfReply) {
+	public void setDateOfReply(Date dateOfReply) {
 		this.dateOfReply = dateOfReply;
 	}
 

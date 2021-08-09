@@ -1,5 +1,9 @@
 package com.qcs.qualitycontrolsystem.dto;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class LessonDtoWithId {
 	private Long id;
 	private String topic;
@@ -22,12 +26,8 @@ public class LessonDtoWithId {
 		this.topic = topic;
 	}
 
-	public String getDateOfClass() {
-		return dateOfClass;
-	}
-
-	public void setDateOfClass(String dateOfClass) {
-		this.dateOfClass = dateOfClass;
+	public Date getDateOfClass() throws ParseException {
+	    return new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dateOfClass).getTime());
 	}
 
 	public boolean isSignOfCompleteness() {

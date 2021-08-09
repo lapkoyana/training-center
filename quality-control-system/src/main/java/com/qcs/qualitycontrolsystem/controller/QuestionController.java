@@ -54,6 +54,7 @@ public class QuestionController {
 		return ResponseEntity.ok().body(HttpStatus.OK);
 	}
 
+	// этот адрес очень под сомнением!!!
 	@GetMapping("/{lessonId}/user/{user}/answers")
 	public ResponseEntity<?> getAnswers(@PathVariable long lessonId, @PathVariable User user) {
 		List<AnswerDtoWithId> answersDto = answerService.getAnswersByLessonAndUser(lessonId, user);

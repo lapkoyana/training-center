@@ -1,5 +1,6 @@
 package com.qcs.qualitycontrolsystem.entity;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,7 @@ public class Lesson {
 	private Long id;
 	
 	private String topic;
-	private String dateOfClass;
+	private Date dateOfClass;
 	private String lectureFile;
 	private boolean signOfCompleteness;
 	
@@ -30,7 +31,7 @@ public class Lesson {
 	public Lesson() {
 	}
 	
-	public Lesson(String topic, String dateOfClass, boolean signOfCompleteness) {
+	public Lesson(String topic, Date dateOfClass, boolean signOfCompleteness) {
 		this.topic = topic;
 		this.dateOfClass = dateOfClass;
 		this.signOfCompleteness = signOfCompleteness;
@@ -47,10 +48,10 @@ public class Lesson {
 	public void setTopic(String topic) {
 		this.topic = topic;
 	}
-	public String getDateOfClass() {
+	public Date getDateOfClass() {
 		return dateOfClass;
 	}
-	public void setDateOfClass(String dateOfClass) {
+	public void setDateOfClass(Date dateOfClass) {
 		this.dateOfClass = dateOfClass;
 	}
 	public String getLectureFile() {
