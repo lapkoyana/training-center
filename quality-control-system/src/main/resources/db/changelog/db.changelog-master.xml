@@ -155,9 +155,6 @@
             <column autoIncrement="true" computed="false" name="id" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK__usr__3213E83F5928BE72"/>
             </column>
-            <column computed="false" name="active" type="bit">
-                <constraints nullable="false"/>
-            </column>
             <column computed="false" name="password" type="varchar(255)"/>
             <column computed="false" name="username" type="varchar(255)"/>
         </createTable>
@@ -168,7 +165,6 @@
 	    </sql>
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/usr.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="usr">
             <column header="id" name="id" type="NUMERIC"/>
-            <column header="active" name="active" type="BOOLEAN"/>
             <column header="password" name="password" type="STRING"/>
             <column header="username" name="username" type="STRING"/>
         </loadData>

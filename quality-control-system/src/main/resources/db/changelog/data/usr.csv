@@ -1,4 +1,4 @@
-"id","active","password","username"
-"1","true","1","a"
-"2","true","1","q"
-"3","true","1","w"
+"id","password","username"
+"1","1","a"
+"2","1","q"
+"3","1","w"

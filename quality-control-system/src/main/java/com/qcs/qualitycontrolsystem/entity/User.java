@@ -25,8 +25,6 @@ public class User implements UserDetails{
 	@Enumerated(EnumType.STRING)
 	private Set<Role> role;
 
-	private boolean active;
-
 	@ManyToMany
 	@JoinTable(name = "answer_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "answer_id"))
 	private Set<Answer> answer = new HashSet<Answer>();
@@ -76,14 +74,6 @@ public class User implements UserDetails{
 
 	public void setRole(Set<Role> role) {
 		this.role = role;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 
 	public String getPassword() {
