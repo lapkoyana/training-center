@@ -54,7 +54,7 @@ public class StudentsController {
 			@PathVariable long lessonId,
 			@RequestBody List<AnswerDto> answersDto,
 			@AuthenticationPrincipal User user) {
-		answerService.addAnswer(answersDto, lessonId, null);
+		answerService.addAnswer(answersDto, lessonId, user);
 		return ResponseEntity.ok().body(HttpStatus.CREATED);
 	}
 }
