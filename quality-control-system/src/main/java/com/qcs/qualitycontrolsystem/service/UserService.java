@@ -1,5 +1,7 @@
 package com.qcs.qualitycontrolsystem.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,5 +33,9 @@ public class UserService implements UserDetailsService {
 
 	public Boolean existsByUsername(String username) {
 		return userRepository.existsByUsername(username);
+	}
+	
+	public List<User> getAllUsers(){
+		return userRepository.findAll();
 	}
 }

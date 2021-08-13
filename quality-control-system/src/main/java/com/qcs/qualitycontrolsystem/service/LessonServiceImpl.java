@@ -15,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.qcs.qualitycontrolsystem.dto.LessonDto;
 import com.qcs.qualitycontrolsystem.dto.LessonDtoWithId;
 import com.qcs.qualitycontrolsystem.dto.LessonDtoWithIdResp;
+import com.qcs.qualitycontrolsystem.dto.UserLessonDto;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
+import com.qcs.qualitycontrolsystem.entity.User;
 import com.qcs.qualitycontrolsystem.mapping.LessonMapping;
 import com.qcs.qualitycontrolsystem.repos.LessonRepository;
 
@@ -26,6 +28,8 @@ public class LessonServiceImpl implements LessonService {
 	private LessonRepository lessonRepository;
 	@Autowired
 	private LessonMapping lessonMapping;
+	@Autowired
+	private UserLessonService userLessonService;
 
 	@Value("${upload.path}")
 	private String uploadPath;
@@ -46,6 +50,10 @@ public class LessonServiceImpl implements LessonService {
 		try {
 			lesson = lessonMapping.mapToLesson(lessonDto);
 			saveFile(lesson, file);
+			
+			userLessonService.getByLesson(lesson);
+			lesson.setUserLesson(userLessonService.getByLesson(lesson));
+			
 			lessonRepository.save(lesson);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -88,5 +96,11 @@ public class LessonServiceImpl implements LessonService {
 
 			lesson.setLectureFile(resultFilename);
 		}
+	}
+
+	@Override
+	public UserLessonDto getSignOfCompletenessForUserAndLesson(long lessonId, User user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

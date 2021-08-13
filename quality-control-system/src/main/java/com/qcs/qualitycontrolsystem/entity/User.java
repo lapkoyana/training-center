@@ -29,7 +29,7 @@ public class User implements UserDetails{
 	@JoinTable(name = "answer_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "answer_id"))
 	private Set<Answer> answer = new HashSet<Answer>();
 
-	@OneToMany(targetEntity = UserLesson.class, mappedBy = "user")
+	@OneToMany(targetEntity = UserLesson.class, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<UserLesson> userLesson;
 
 	public User(String username) {
@@ -90,6 +90,14 @@ public class User implements UserDetails{
 
 	public void setAnswer(Set<Answer> answer) {
 		this.answer = answer;
+	}
+
+	public List<UserLesson> getUserLesson() {
+		return userLesson;
+	}
+
+	public void setUserLesson(List<UserLesson> userLesson) {
+		this.userLesson = userLesson;
 	}
 
 	@Override

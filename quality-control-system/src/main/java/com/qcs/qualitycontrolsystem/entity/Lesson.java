@@ -25,7 +25,7 @@ public class Lesson {
 			CascadeType.REFRESH, CascadeType.REMOVE})
 	private List<Question> questions;
 	
-	@OneToMany(targetEntity=UserLesson.class, mappedBy="lesson")
+	@OneToMany(targetEntity=UserLesson.class, mappedBy="lesson", cascade = CascadeType.ALL)
 	private List<UserLesson> userLesson;
 	
 	public Lesson() {
@@ -74,4 +74,13 @@ public class Lesson {
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
+
+	public List<UserLesson> getUserLesson() {
+		return userLesson;
+	}
+
+	public void setUserLesson(List<UserLesson> userLesson) {
+		this.userLesson = userLesson;
+	}
+	
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.qcs.qualitycontrolsystem.dto.AnswerDto;
 import com.qcs.qualitycontrolsystem.dto.LessonDtoWithIdResp;
 import com.qcs.qualitycontrolsystem.dto.QuestionDtoWithId;
+import com.qcs.qualitycontrolsystem.dto.UserLessonDto;
 import com.qcs.qualitycontrolsystem.entity.User;
 import com.qcs.qualitycontrolsystem.service.AnswerService;
 import com.qcs.qualitycontrolsystem.service.LessonService;
@@ -50,11 +51,19 @@ public class StudentsController {
 	}
 
 	@PostMapping("/{lessonId}/questions")
-	public ResponseEntity<?> addAnswers(
+	public ResponseEntity<?> addAnswers( // вот здесь, при добавлении вопроса, еще userlesson апдейтится
 			@PathVariable long lessonId,
 			@RequestBody List<AnswerDto> answersDto,
 			@AuthenticationPrincipal User user) {
 		answerService.addAnswer(answersDto, lessonId, user);
 		return ResponseEntity.ok().body(HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/{lessonId}")
+	public ResponseEntity<?> getUserLesson(
+			@PathVariable long lessonId,
+			@AuthenticationPrincipal User user){
+		UserLessonDto lessonUserDto = lessonServise.getSignOfCompletenessForUserAndLesson(lessonId, user);
+		return ResponseEntity.ok(lessonUserDto); // объект, в котором только id lesson, id user и signOfCompleteness
 	}
 }
