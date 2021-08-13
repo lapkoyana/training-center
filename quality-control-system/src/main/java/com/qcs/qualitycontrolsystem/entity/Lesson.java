@@ -1,7 +1,9 @@
 package com.qcs.qualitycontrolsystem.entity;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,8 +27,8 @@ public class Lesson {
 			CascadeType.REFRESH, CascadeType.REMOVE})
 	private List<Question> questions;
 	
-	@OneToMany(targetEntity=UserLesson.class, mappedBy="lesson", cascade = CascadeType.ALL)
-	private List<UserLesson> userLesson;
+	@OneToMany(mappedBy="lesson", cascade = CascadeType.ALL)
+	private Set<UserLesson> userLesson = new HashSet<>();
 	
 	public Lesson() {
 	}
@@ -75,11 +77,11 @@ public class Lesson {
 		this.questions = questions;
 	}
 
-	public List<UserLesson> getUserLesson() {
+	public Set<UserLesson> getUserLesson() {
 		return userLesson;
 	}
 
-	public void setUserLesson(List<UserLesson> userLesson) {
+	public void setUserLesson(Set<UserLesson> userLesson) {
 		this.userLesson = userLesson;
 	}
 	

@@ -3,8 +3,11 @@ package com.qcs.qualitycontrolsystem.service;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,9 @@ import com.qcs.qualitycontrolsystem.dto.LessonDtoWithId;
 import com.qcs.qualitycontrolsystem.dto.LessonDtoWithIdResp;
 import com.qcs.qualitycontrolsystem.dto.UserLessonDto;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
+import com.qcs.qualitycontrolsystem.entity.Role;
 import com.qcs.qualitycontrolsystem.entity.User;
+import com.qcs.qualitycontrolsystem.entity.UserLesson;
 import com.qcs.qualitycontrolsystem.mapping.LessonMapping;
 import com.qcs.qualitycontrolsystem.repos.LessonRepository;
 
@@ -30,6 +35,8 @@ public class LessonServiceImpl implements LessonService {
 	private LessonMapping lessonMapping;
 	@Autowired
 	private UserLessonService userLessonService;
+	@Autowired
+	private UserService userService;
 
 	@Value("${upload.path}")
 	private String uploadPath;
@@ -50,10 +57,17 @@ public class LessonServiceImpl implements LessonService {
 		try {
 			lesson = lessonMapping.mapToLesson(lessonDto);
 			saveFile(lesson, file);
-			
-			userLessonService.getByLesson(lesson);
-			lesson.setUserLesson(userLessonService.getByLesson(lesson));
-			
+
+			List<User> allStudents = userService.getAllUsers().stream()
+					.filter(user -> user.getRole().iterator().next().equals(Role.STUDENT)).collect(Collectors.toList());
+
+			Set<UserLesson> userLessonsForThisLesson = new HashSet<>();
+			allStudents.forEach(student -> {
+				UserLesson userLesson = new UserLesson(student, lesson);
+				userLessonsForThisLesson.add(userLesson);
+			});
+			lesson.setUserLesson(userLessonsForThisLesson);
+
 			lessonRepository.save(lesson);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -100,7 +114,6 @@ public class LessonServiceImpl implements LessonService {
 
 	@Override
 	public UserLessonDto getSignOfCompletenessForUserAndLesson(long lessonId, User user) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

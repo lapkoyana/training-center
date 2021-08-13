@@ -29,8 +29,8 @@ public class User implements UserDetails{
 	@JoinTable(name = "answer_user", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "answer_id"))
 	private Set<Answer> answer = new HashSet<Answer>();
 
-	@OneToMany(targetEntity = UserLesson.class, mappedBy = "user", cascade = CascadeType.ALL)
-	private List<UserLesson> userLesson;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<UserLesson> userLesson = new HashSet<>();
 
 	public User(String username) {
 		this.username = username;
@@ -92,11 +92,11 @@ public class User implements UserDetails{
 		this.answer = answer;
 	}
 
-	public List<UserLesson> getUserLesson() {
+	public Set<UserLesson> getUserLesson() {
 		return userLesson;
 	}
 
-	public void setUserLesson(List<UserLesson> userLesson) {
+	public void setUserLesson(Set<UserLesson> userLesson) {
 		this.userLesson = userLesson;
 	}
 

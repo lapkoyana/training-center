@@ -51,7 +51,7 @@ public class StudentsController {
 	}
 
 	@PostMapping("/{lessonId}/questions")
-	public ResponseEntity<?> addAnswers( // вот здесь, при добавлении вопроса, еще userlesson апдейтится
+	public ResponseEntity<?> addAnswers(
 			@PathVariable long lessonId,
 			@RequestBody List<AnswerDto> answersDto,
 			@AuthenticationPrincipal User user) {
@@ -64,6 +64,6 @@ public class StudentsController {
 			@PathVariable long lessonId,
 			@AuthenticationPrincipal User user){
 		UserLessonDto lessonUserDto = lessonServise.getSignOfCompletenessForUserAndLesson(lessonId, user);
-		return ResponseEntity.ok(lessonUserDto); // объект, в котором только id lesson, id user и signOfCompleteness
+		return ResponseEntity.ok(lessonUserDto);
 	}
 }

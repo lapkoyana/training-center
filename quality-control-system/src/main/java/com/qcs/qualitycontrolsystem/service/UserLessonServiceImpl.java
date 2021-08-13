@@ -24,15 +24,20 @@ public class UserLessonServiceImpl implements UserLessonService{
 		return userLessonRepository.findByUserAndLesson(user, lesson);
 	}
 
-	@Override
-	public List<UserLesson> getByUser(User user) {
-		return userLessonRepository.findByUser(user);
-	}
+//	@Override
+//	public List<UserLesson> getByUser(User user) {
+//		return userLessonRepository.findByUser(user);
+//	}
 
 	@Override
 	public List<UserLesson> getByLesson(Lesson lesson) {
 		return userLessonRepository.findByLesson(lesson);
+	}
 
+	@Override
+	public void addUserLesson(Lesson lesson, User user) {
+		UserLesson userLesson = new UserLesson(user, lesson);
+		userLessonRepository.save(userLesson);
 	}
 
 }

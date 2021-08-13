@@ -9,7 +9,9 @@ import com.qcs.qualitycontrolsystem.entity.UserLesson;
 public interface UserLessonService {
 	public UserLesson getByUserAndLesson(User user, long lessonId);
 	
-	public List<UserLesson> getByUser(User user);
-	
+//	public List<UserLesson> getByUser(User user);
+//	
 	public List<UserLesson> getByLesson(Lesson lesson);
+
+	public void addUserLesson(Lesson lesson, User user);
 }

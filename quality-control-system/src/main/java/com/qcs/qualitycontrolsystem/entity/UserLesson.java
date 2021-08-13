@@ -16,12 +16,12 @@ public class UserLesson {
 	private Long id;
 	private boolean signOfCompleteness;
 
-	@ManyToOne(targetEntity = User.class)
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToOne(targetEntity = Lesson.class)
-	@JoinColumn(name = "lesson_id", referencedColumnName = "id")
+	@ManyToOne
+	@JoinColumn(name = "lesson_id")
 	private Lesson lesson;
 
 	public UserLesson() {
