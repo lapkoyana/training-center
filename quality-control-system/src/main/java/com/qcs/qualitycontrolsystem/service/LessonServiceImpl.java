@@ -111,9 +111,4 @@ public class LessonServiceImpl implements LessonService {
 			lesson.setLectureFile(resultFilename);
 		}
 	}
-
-	@Override
-	public UserLessonDto getSignOfCompletenessForUserAndLesson(long lessonId, User user) {
-		return null;
-	}
 }

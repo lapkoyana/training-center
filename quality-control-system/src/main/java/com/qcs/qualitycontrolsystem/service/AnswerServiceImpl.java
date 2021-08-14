@@ -13,9 +13,11 @@ import com.qcs.qualitycontrolsystem.entity.Answer;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
 import com.qcs.qualitycontrolsystem.entity.Question;
 import com.qcs.qualitycontrolsystem.entity.User;
+import com.qcs.qualitycontrolsystem.entity.UserLesson;
 import com.qcs.qualitycontrolsystem.mapping.AnswerMapping;
 import com.qcs.qualitycontrolsystem.repos.AnswerRepository;
 import com.qcs.qualitycontrolsystem.repos.LessonRepository;
+import com.qcs.qualitycontrolsystem.repos.UserLessonRepository;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
@@ -26,6 +28,8 @@ public class AnswerServiceImpl implements AnswerService {
 	LessonRepository lessonRepository;
 	@Autowired
 	AnswerMapping answerMapping;
+	@Autowired
+	UserLessonRepository userLessonRepository;
 
 	@Override
 	public List<AnswerDtoWithId> getAllAnswers() {
@@ -49,6 +53,10 @@ public class AnswerServiceImpl implements AnswerService {
 		}
 
 		answerRepository.saveAll(answers);
+		
+		UserLesson userLesson = userLessonRepository.findByUserAndLesson(user, lesson);
+		userLesson.setSignOfCompleteness(true);
+		userLessonRepository.save(userLesson);
 	}
 
 	@Override

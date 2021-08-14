@@ -48,7 +48,7 @@ public class LessonController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> addLesson( // вот здесь к каждому юзеру надо еще присобачить userLesson
+	public ResponseEntity<?> addLesson(
 			@RequestParam("lesson") String lessonDtoString,
 			@RequestParam(value = "file", required=false) MultipartFile file) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();

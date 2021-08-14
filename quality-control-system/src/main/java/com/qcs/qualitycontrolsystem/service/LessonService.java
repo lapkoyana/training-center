@@ -22,5 +22,4 @@ public interface LessonService {
 
 	public void deleteLesson(long id);
 
-	public UserLessonDto getSignOfCompletenessForUserAndLesson(long lessonId, User user);
 }

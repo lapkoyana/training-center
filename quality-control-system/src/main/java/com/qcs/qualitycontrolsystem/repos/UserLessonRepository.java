@@ -10,8 +10,6 @@ import com.qcs.qualitycontrolsystem.entity.UserLesson;
 
 public interface UserLessonRepository extends JpaRepository<UserLesson, Long> {
 	UserLesson findByUserAndLesson(User user, Lesson leson);
-	
-	List<UserLesson> findByLesson(Lesson lesson);
-	
+		
 	List<UserLesson> findByUser(User user);
 }

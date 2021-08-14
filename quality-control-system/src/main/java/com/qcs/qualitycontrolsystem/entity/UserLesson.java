@@ -39,4 +39,21 @@ public class UserLesson {
 	public void setSignOfCompleteness(boolean signOfCompleteness) {
 		this.signOfCompleteness = signOfCompleteness;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Lesson getLesson() {
+		return lesson;
+	}
+
+	public void setLesson(Lesson lesson) {
+		this.lesson = lesson;
+	}
+	
 }
