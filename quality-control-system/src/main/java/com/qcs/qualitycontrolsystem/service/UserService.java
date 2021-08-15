@@ -1,6 +1,7 @@
 package com.qcs.qualitycontrolsystem.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +9,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.qcs.qualitycontrolsystem.dto.UserDto;
+import com.qcs.qualitycontrolsystem.entity.Role;
 import com.qcs.qualitycontrolsystem.entity.User;
+import com.qcs.qualitycontrolsystem.mapping.UserMapping;
 import com.qcs.qualitycontrolsystem.repos.UserRepository;
 
 @Service
@@ -16,6 +20,8 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserMapping userMapping;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -37,5 +43,13 @@ public class UserService implements UserDetailsService {
 	
 	public List<User> getAllUsers(){
 		return userRepository.findAll();
+	}
+	
+	public List<UserDto> getAllStudents() {
+		List<User> allStudents = getAllUsers().stream()
+				.filter(user -> user.getRole().iterator().next().equals(Role.STUDENT)).collect(Collectors.toList());
+		
+		List<UserDto> userDtos = allStudents.stream().map(u -> userMapping.mapToUserDto(u)).collect(Collectors.toList());
+		return userDtos;
 	}
 }

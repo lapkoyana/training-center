@@ -14,6 +14,6 @@ public interface AnswerService {
 
 	public void addAnswer(List<AnswerDto> answersDto, long lessonId, User user);
 
-	public List<AnswerDtoWithId> getAnswersByLessonAndUser(long lesson, User user);
+	public List<AnswerDtoWithId> getAnswersByLessonAndUser(long lesson, long user);
 
 }

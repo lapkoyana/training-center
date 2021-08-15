@@ -7,8 +7,8 @@ public class AnswerDtoWithId {
 	private Date dateOfReply;
 	private String content;
 	private String question;
-	private String user;
-	private String lesson;
+	private Long userId;
+	private Long lessonId;
 
 	public Long getId() {
 		return id;
@@ -42,19 +42,19 @@ public class AnswerDtoWithId {
 		this.question = question;
 	}
 
-	public String getUser() {
-		return user;
+	public Long getUser() {
+		return userId;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUser(Long userId) {
+		this.userId = userId;
 	}
 
-	public String getLesson() {
-		return lesson;
+	public Long getLesson() {
+		return lessonId;
 	}
 
-	public void setLesson(String lesson) {
-		this.lesson = lesson;
+	public void setLesson(Long lessonId) {
+		this.lessonId = lessonId;
 	}
 }

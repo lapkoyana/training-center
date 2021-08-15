@@ -15,14 +15,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qcs.qualitycontrolsystem.dto.AnswerDtoWithId;
 import com.qcs.qualitycontrolsystem.dto.QuestionDto;
 import com.qcs.qualitycontrolsystem.dto.QuestionDtoWithId;
+import com.qcs.qualitycontrolsystem.dto.UserDto;
 import com.qcs.qualitycontrolsystem.entity.User;
 import com.qcs.qualitycontrolsystem.service.AnswerService;
 import com.qcs.qualitycontrolsystem.service.QuestionService;
+import com.qcs.qualitycontrolsystem.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -34,6 +37,8 @@ public class QuestionController {
 	private QuestionService questionServise;
 	@Autowired
 	private AnswerService answerService;
+	@Autowired
+	private UserService userService;
 
 	@GetMapping("/{lessonId}/questions")
 	public ResponseEntity<?> getQuestions(@PathVariable long lessonId) {
@@ -59,9 +64,15 @@ public class QuestionController {
 		return ResponseEntity.ok().body(HttpStatus.OK);
 	}
 
-	@GetMapping("/{lessonId}/user/{user}/answers")
-	public ResponseEntity<?> getAnswers(@PathVariable long lessonId, @PathVariable User user) {
-		List<AnswerDtoWithId> answersDto = answerService.getAnswersByLessonAndUser(lessonId, user);
+	@GetMapping("/answers")
+	public ResponseEntity<?> getAnswers() {
+		List<AnswerDtoWithId> answersDto = answerService.getAllAnswers();
 		return ResponseEntity.ok(answersDto);
+	}
+	
+	@GetMapping("/students")
+	public ResponseEntity<?> getStudents() {
+		List<UserDto> allStudents = userService.getAllStudents();
+		return ResponseEntity.ok(allStudents);
 	}
 }

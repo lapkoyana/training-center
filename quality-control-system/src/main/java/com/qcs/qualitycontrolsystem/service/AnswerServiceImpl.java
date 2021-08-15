@@ -18,6 +18,7 @@ import com.qcs.qualitycontrolsystem.mapping.AnswerMapping;
 import com.qcs.qualitycontrolsystem.repos.AnswerRepository;
 import com.qcs.qualitycontrolsystem.repos.LessonRepository;
 import com.qcs.qualitycontrolsystem.repos.UserLessonRepository;
+import com.qcs.qualitycontrolsystem.repos.UserRepository;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
@@ -30,6 +31,8 @@ public class AnswerServiceImpl implements AnswerService {
 	AnswerMapping answerMapping;
 	@Autowired
 	UserLessonRepository userLessonRepository;
+	@Autowired
+	UserRepository userRepository;
 
 	@Override
 	public List<AnswerDtoWithId> getAllAnswers() {
@@ -60,8 +63,9 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public List<AnswerDtoWithId> getAnswersByLessonAndUser(long lessonId, User user) {
+	public List<AnswerDtoWithId> getAnswersByLessonAndUser(long lessonId, long userId) {
 		Lesson lesson = lessonRepository.findById(lessonId).orElseThrow();
+		User user = userRepository.findById(userId).orElse(null);
 		return answerRepository.findByUserAndLesson(user, lesson).stream().map(answerMapping::mapToAnswerDto)
 				.collect(Collectors.toList());
 	}

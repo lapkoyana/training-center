@@ -21,8 +21,8 @@ public class AnswerMapping {
 		dto.setDateOfReply(answer.getDateOfReply());
 		dto.setContent(answer.getContent());
 		dto.setQuestion(answer.getQuestion().getContent());
-		dto.setLesson(answer.getLesson().getTopic());
-		dto.setUser(answer.getUser().getUsername());
+		dto.setLesson(answer.getLesson().getId());
+		dto.setUser(answer.getUser().getId());
 		return dto;
 	}
 
