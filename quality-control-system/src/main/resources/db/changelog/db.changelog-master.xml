@@ -203,7 +203,7 @@
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="answer_user" constraintName="answer_user_usr_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="usr" validate="true"/>
     </changeSet>
     <changeSet author="User (generated)" id="1627041800853-26">
-        <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="lesson_questions" constraintName="lesson_questions_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="lesson_questions" constraintName="lesson_questions_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
     </changeSet>
     <changeSet author="User (generated)" id="1627041800853-27">
         <addForeignKeyConstraint baseColumnNames="questions_id" baseTableName="lesson_questions" constraintName="lesson_questions_question_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="question" validate="true"/>
