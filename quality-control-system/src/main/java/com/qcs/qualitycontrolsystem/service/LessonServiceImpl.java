@@ -2,23 +2,26 @@ package com.qcs.qualitycontrolsystem.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.qcs.qualitycontrolsystem.dto.LessonDto;
 import com.qcs.qualitycontrolsystem.dto.LessonDtoWithId;
 import com.qcs.qualitycontrolsystem.dto.LessonDtoWithIdResp;
-import com.qcs.qualitycontrolsystem.dto.UserLessonDto;
 import com.qcs.qualitycontrolsystem.entity.Lesson;
 import com.qcs.qualitycontrolsystem.entity.Role;
 import com.qcs.qualitycontrolsystem.entity.User;
@@ -33,8 +36,6 @@ public class LessonServiceImpl implements LessonService {
 	private LessonRepository lessonRepository;
 	@Autowired
 	private LessonMapping lessonMapping;
-	@Autowired
-	private UserLessonService userLessonService;
 	@Autowired
 	private UserService userService;
 
@@ -110,5 +111,21 @@ public class LessonServiceImpl implements LessonService {
 
 			lesson.setLectureFile(resultFilename);
 		}
+	}
+
+	@Override
+	public Resource load(String filename) {
+	    try {
+			Path file = Paths.get("uploads").resolve(filename);
+			Resource resource = new UrlResource(file.toUri());
+			
+			if (resource.exists() || resource.isReadable()) {
+			       return resource;
+		    } else {
+		        throw new RuntimeException("Could not read the file!");
+		    }
+	    } catch (MalformedURLException e) {
+	      throw new RuntimeException("Error: " + e.getMessage());
+	    }
 	}
 }
