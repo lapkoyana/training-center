@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class AnswerDtoWithId {
 	private Long id;
-	private Date dateOfReply;
+	private String dateOfReply;
 	private String content;
 	private String question;
 	private Long userId;
@@ -18,12 +18,16 @@ public class AnswerDtoWithId {
 		this.id = id;
 	}
 
-	public Date getDateOfReply() {
+	public String getDateOfReply() {
 		return dateOfReply;
 	}
 
 	public void setDateOfReply(Date dateOfReply) {
-		this.dateOfReply = dateOfReply;
+		if (dateOfReply == null) {
+			this.dateOfReply = "";
+		} else {
+			this.dateOfReply = dateOfReply.toString();	
+		}
 	}
 
 	public String getContent() {

@@ -3,7 +3,6 @@ package com.qcs.qualitycontrolsystem.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,8 +71,8 @@ public class StudentsController {
 	
 	@GetMapping("/files/{filename}")
 	public ResponseEntity<?> getFileList(@PathVariable String filename) {
-		Resource file = lessonServise.load(filename);
+		byte[] file = lessonServise.load(filename);
 		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment").body(file);
 	}
 }

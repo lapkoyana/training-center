@@ -21,5 +21,5 @@ public interface LessonService {
 
 	public void deleteLesson(long id);
 	
-	public Resource load(String filename);
+	public byte[] load(String filename);
 }
