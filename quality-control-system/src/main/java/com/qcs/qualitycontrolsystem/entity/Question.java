@@ -15,7 +15,7 @@ public class Question {
 
 	private String content;
 
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "lesson_id")
 	private Lesson lesson;
 

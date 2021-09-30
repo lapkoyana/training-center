@@ -1,16 +1,13 @@
 package com.qcs.qualitycontrolsystem.entity;
 
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -23,15 +20,12 @@ public class Answer {
 	private String content;
 
 	@ManyToOne
+	@JoinColumn(name = "user_id")
 	private User user;
 	@ManyToOne
 	private Question question;
 	@ManyToOne
 	private Lesson lesson;
-
-	@ManyToMany
-	@JoinTable(name = "answer_user", joinColumns = @JoinColumn(name = "answer_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> users = new HashSet<User>();
 
 	public Answer() {
 	}
@@ -82,14 +76,6 @@ public class Answer {
 
 	public void setQuestion(Question question) {
 		this.question = question;
-	}
-
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
 	}
 
 	public Lesson getLesson() {

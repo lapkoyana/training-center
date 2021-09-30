@@ -68,22 +68,6 @@
 	        SET IDENTITY_INSERT answer OFF;
 	    </sql>
     </changeSet>
-    <changeSet author="User (generated)" id="1627041800853-6">
-        <createTable tableName="answer_user">
-            <column computed="false" name="user_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column computed="false" name="answer_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="User (generated)" id="1627041800853-7">
-        <loadData commentLineStartsWith="#" encoding="UTF-8" file="data/answer_user.csv" quotchar="&quot;" separator="," relativeToChangelogFile="true" tableName="answer_user">
-            <column header="user_id" name="user_id" type="NUMERIC"/>
-            <column header="answer_id" name="answer_id" type="NUMERIC"/>
-        </loadData>
-    </changeSet>
     <changeSet author="User (generated)" id="1627041800853-8">
         <createTable tableName="lesson_questions">
             <column computed="false" name="lesson_id" type="bigint">
@@ -172,12 +156,6 @@
 	        SET IDENTITY_INSERT usr OFF;
 	    </sql>
     </changeSet>
-    <changeSet author="User (generated)" id="1627041800853-16">
-        <addForeignKeyConstraint baseColumnNames="answer_id" baseTableName="answer_user" constraintName="answer_user_answer_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="answer" validate="true"/>
-    </changeSet>
-    <changeSet author="User (generated)" id="1627041800853-17">
-        <addPrimaryKey columnNames="answer_id, user_id" constraintName="PK__answer_u__D8E9A068C63482F0" tableName="answer_user"/>
-    </changeSet>
     <changeSet author="User (generated)" id="1627041800853-18">
         <addUniqueConstraint columnNames="questions_id" constraintName="lesson_questions_uk" tableName="lesson_questions"/>
     </changeSet>
@@ -198,9 +176,6 @@
     </changeSet>
     <changeSet author="User (generated)" id="1627041800853-24">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="answer" constraintName="answer_usr_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="usr" validate="true"/>
-    </changeSet>
-    <changeSet author="User (generated)" id="1627041800853-25">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="answer_user" constraintName="answer_user_usr_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="usr" validate="true"/>
     </changeSet>
     <changeSet author="User (generated)" id="1627041800853-26">
         <addForeignKeyConstraint baseColumnNames="lesson_id" baseTableName="lesson_questions" constraintName="lesson_questions_lesson_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="lesson" validate="true"/>
