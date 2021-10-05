@@ -24,6 +24,7 @@ import com.qcs.qualitycontrolsystem.payload.request.LoginRequest;
 import com.qcs.qualitycontrolsystem.payload.request.SignupRequest;
 import com.qcs.qualitycontrolsystem.payload.response.JwtResponse;
 import com.qcs.qualitycontrolsystem.payload.response.MessageResponse;
+import com.qcs.qualitycontrolsystem.service.UserDetailsImpl;
 import com.qcs.qualitycontrolsystem.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -47,7 +48,7 @@ public class AuthController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
-		User user = (User) authentication.getPrincipal();
+		UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();
 
 		List<String> roles = user.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());

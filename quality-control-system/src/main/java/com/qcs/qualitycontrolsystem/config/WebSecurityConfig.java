@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.qcs.qualitycontrolsystem.jwt.AuthEntryPointJwt;
 import com.qcs.qualitycontrolsystem.jwt.AuthTokenFilter;
+import com.qcs.qualitycontrolsystem.service.UserDetailsServiceImpl;
 import com.qcs.qualitycontrolsystem.service.UserService;
 
 @Configuration
@@ -24,7 +25,7 @@ import com.qcs.qualitycontrolsystem.service.UserService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	UserService userService;
+	UserDetailsServiceImpl userDetailsService;
 
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
@@ -36,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+		auth.userDetailsService(userDetailsService).passwordEncoder(NoOpPasswordEncoder.getInstance());
 	}
 
 	@Bean

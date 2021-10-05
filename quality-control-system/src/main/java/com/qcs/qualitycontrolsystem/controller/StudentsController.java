@@ -24,7 +24,9 @@ import com.qcs.qualitycontrolsystem.entity.User;
 import com.qcs.qualitycontrolsystem.service.AnswerService;
 import com.qcs.qualitycontrolsystem.service.LessonService;
 import com.qcs.qualitycontrolsystem.service.QuestionService;
+import com.qcs.qualitycontrolsystem.service.UserDetailsImpl;
 import com.qcs.qualitycontrolsystem.service.UserLessonService;
+import com.qcs.qualitycontrolsystem.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -40,6 +42,8 @@ public class StudentsController {
 	private AnswerService answerService;
 	@Autowired
 	private UserLessonService userLessonService;
+	@Autowired
+	private UserService userService;
 
 	@GetMapping
 	public ResponseEntity<?> getLessons() {
@@ -57,14 +61,16 @@ public class StudentsController {
 	public ResponseEntity<?> addAnswers(
 			@PathVariable long lessonId,
 			@RequestBody List<AnswerDto> answersDto,
-			@AuthenticationPrincipal User user) {
+			@AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+		User user = userService.findById(userDetailsImpl.getId());
 		answerService.addAnswer(answersDto, lessonId, user);
 		return ResponseEntity.ok().body(HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/completeness")
 	public ResponseEntity<?> getUserLesson(
-			@AuthenticationPrincipal User user){
+			@AuthenticationPrincipal UserDetailsImpl userDetailsImpl){
+		User user = userService.findById(userDetailsImpl.getId());
 		List<UserLessonDto> lessonUserDtos = userLessonService.getByUser(user);
 		return ResponseEntity.ok(lessonUserDtos);
 	}
