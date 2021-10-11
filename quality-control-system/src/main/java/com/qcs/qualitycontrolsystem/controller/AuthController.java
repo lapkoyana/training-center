@@ -48,12 +48,14 @@ public class AuthController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
 
-		UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();
+		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+		User user = userService.findById(userDetailsImpl.getId());
 
-		List<String> roles = user.getAuthorities().stream().map(item -> item.getAuthority())
+		List<String> roles = userDetailsImpl.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(new JwtResponse(jwt, user.getId(), user.getUsername(), roles));
+		return ResponseEntity.ok(new JwtResponse(jwt, userDetailsImpl.getId(), userDetailsImpl.getUsername(),
+				user.getFirstName(), user.getLastName(), roles));
 	}
 
 	@PostMapping("/signup")
@@ -63,7 +65,8 @@ public class AuthController {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: User is already exist!"));
 		}
 
-		User user = new User(signupRequest.getUsername(), signupRequest.getPassword());
+		User user = new User(signupRequest.getUsername(), signupRequest.getPassword(),
+				signupRequest.getFirstName(), signupRequest.getLastName());
 
 		Set<String> roleStrings = signupRequest.getRole();
 		Set<Role> roles = new HashSet<>();

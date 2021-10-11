@@ -5,6 +5,9 @@ import java.util.Set;
 public class SignupRequest {
 	private String username;
 	
+	private String firstName;
+	private String lastName;
+	
 	private Set<String> role;
 	
 	private String password;
@@ -32,4 +35,21 @@ public class SignupRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String name) {
+		this.firstName = name;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String surname) {
+		this.lastName = surname;
+	}
+	
 }
